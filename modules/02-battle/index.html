@@ -16,6 +16,7 @@
   <!-- Ambient Particle Canvas & Light Overlay -->
   <canvas id="particle-canvas"></canvas>
   <div class="light-overlay"></div>
+  <div class="low-hp-vignette" id="low-hp-vignette"></div>
 
   <!-- Screen Shake Wrapper -->
   <div id="shake-wrapper">
@@ -35,6 +36,11 @@
       </div>
 
       <div class="header-right">
+        <!-- Combo Counter HUD -->
+        <div class="combo-badge-hud hidden" id="combo-hud">
+          🔥 <span id="combo-count">0</span> COMBO!
+        </div>
+
         <div class="score-card">
           <span class="score-icon">🛡️</span>
           <span class="score-value" id="score-display">0</span>
@@ -46,12 +52,13 @@
       </div>
     </header>
 
-    <!-- Floating Score Animation Container -->
+    <!-- Floating Score & Combat Feedback Container -->
     <div id="floating-score-container"></div>
+    <div class="perfect-block-alert hidden" id="perfect-block-alert">🛡️ PERFECT BLOCK!</div>
 
     <main class="story-scroll-container">
 
-      <!-- SCENE 01: முதல் போர் (TYPE 1 BATTLE — DUEL) -->
+      <!-- SCENE 01: முதல் போர் (TYPE 1 BATTLE — DUEL WITH MULTIPLE ENEMY TYPES) -->
       <section class="story-scene-section" id="scene-duel">
         <div class="scene-environment-layer">
           <div class="bg-env-image"></div>
@@ -66,13 +73,15 @@
                 <div class="hp-bar-track"><div class="hp-bar-fill warrior-hp" id="warrior-hp-1"></div></div>
               </div>
               <div class="health-unit">
-                <span class="unit-name">⚔️ எதிரி HP</span>
+                <span class="unit-name" id="enemy-name-label">⚔️ எதிரி HP</span>
                 <div class="hp-bar-track"><div class="hp-bar-fill enemy-hp" id="enemy-hp-1"></div></div>
               </div>
             </div>
 
-            <div class="battle-arena-box">
+            <div class="battle-arena-box" id="arena-box-1">
+              <div class="enemy-attack-warning hidden" id="enemy-warning-1">⚠️ எதிரி தாக்குதல்!</div>
               <div class="impact-flash" id="impact-flash-1"></div>
+
               <div class="battle-unit warrior-unit" id="anim-warrior-1">
                 <img src="../../assets/images/characters/warrior_battle.png" alt="வீரன்" class="unit-sprite-img warrior-sprite">
               </div>
@@ -80,7 +89,8 @@
                 <img src="../../assets/images/weapons/weapon_axe.png" alt="கோடாரி" class="weapon-clash-img">
               </div>
               <div class="battle-unit enemy-unit" id="anim-enemy-1">
-                <img src="../../assets/images/enemies/enemy_warrior.png" alt="எதிரி" class="unit-sprite-img enemy-sprite">
+                <span class="enemy-type-badge" id="enemy-type-badge">⚔️ எளிய எதிரி</span>
+                <img src="../../assets/images/enemies/enemy_warrior.png" alt="எதிரி" class="unit-sprite-img enemy-sprite" id="enemy-sprite-1">
               </div>
             </div>
           </div>
@@ -92,6 +102,7 @@
           <div class="scene-action-bar">
             <button class="game-btn glow-red" id="cmd-attack-1">⚔️ தாக்கு!</button>
             <button class="game-btn glow-gold" id="cmd-block-1">🛡️ காப்பாற்று!</button>
+            <button class="game-btn glow-orange hidden" id="cmd-counter-1">⚡ எதிர்த்து தாக்கு!</button>
             <button class="game-btn glow-orange hidden" id="goto-fall-btn">➡️ தொடர்க (சவால்)</button>
           </div>
         </div>
@@ -178,11 +189,11 @@
               </div>
               <div class="ally-unit ally-2 hidden" id="ally-unit-2">
                 <img src="../../assets/images/characters/warrior_battle.png" alt="வீரன் 2" class="ally-img">
-                <span class="unit-tag">தோழன் 1</span>
+                <span class="unit-tag" id="ally-tag-2">🪓 கோடாரி தோழன்</span>
               </div>
               <div class="ally-unit ally-3 hidden" id="ally-unit-3">
                 <img src="../../assets/images/characters/warrior_side.png" alt="வீரன் 3" class="ally-img">
-                <span class="unit-tag">தோழன் 2</span>
+                <span class="unit-tag" id="ally-tag-3">🛡️ கேடய தோழன்</span>
               </div>
             </div>
           </div>
@@ -235,7 +246,7 @@
       </section>
 
 
-      <!-- SCENE 07: இறுதி அரக்கன் (GIANT BOSS BATTLE) -->
+      <!-- SCENE 07: இறுதி அரக்கன் (GIANT BOSS BATTLE WITH MULTI-PHASES) -->
       <section class="story-scene-section hidden" id="scene-boss">
         <div class="scene-environment-layer">
           <div class="bg-env-image"></div>
@@ -255,7 +266,8 @@
               </div>
             </div>
 
-            <div class="boss-arena-box">
+            <div class="boss-arena-box" id="boss-arena-box">
+              <div class="enemy-attack-warning hidden" id="boss-warning">⚠️ அரக்கன் பெரும் தாக்குதல்!</div>
               <div class="impact-flash" id="boss-impact-flash"></div>
               
               <div class="boss-hero-squad" id="boss-hero-squad">
