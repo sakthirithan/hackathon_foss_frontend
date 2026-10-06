@@ -1,5 +1,5 @@
 /* ==========================================================================
-   MODULE 01 — JOURNEY LOGIC & CINEMATIC ENGINE
+   MODULE 01 — JOURNEY LOGIC & ADVANCED CINEMATIC ENGINE
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -135,7 +135,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // 5. Scene Manager
+  // 5. Environmental Lightning Flash Engine
+  function triggerLightningFlash() {
+    const lightningLayer = document.getElementById('lightning-flash');
+    if (!lightningLayer) return;
+
+    lightningLayer.classList.add('lightning');
+    setTimeout(() => {
+      lightningLayer.classList.remove('lightning');
+      setTimeout(() => {
+        lightningLayer.classList.add('lightning');
+        setTimeout(() => lightningLayer.classList.remove('lightning'), 60);
+      }, 100);
+    }, 80);
+  }
+
+  setInterval(() => {
+    if (SceneManager.currentSceneId === 'scene-01' || SceneManager.currentSceneId === 'scene-03') {
+      if (Math.random() > 0.65) triggerLightningFlash();
+    }
+  }, 12000);
+
+  // 6. Interactive Parallax Pointer Effect
+  window.addEventListener('mousemove', (e) => {
+    const mouseX = (e.clientX / window.innerWidth - 0.5) * 20;
+    const mouseY = (e.clientY / window.innerHeight - 0.5) * 15;
+
+    const bgLayer = document.querySelector('.active-scene .parallax-bg-layer');
+    if (bgLayer) {
+      bgLayer.style.transform = `scale(1.05) translate(${mouseX * 0.4}px, ${mouseY * 0.4}px)`;
+    }
+
+    const heroContainer = document.querySelector('.active-scene .stage-hero-container');
+    if (heroContainer) {
+      heroContainer.style.transform = `translate(${mouseX * 0.8}px, ${mouseY * 0.8}px)`;
+    }
+  });
+
+  // 7. Scene Manager
   const SceneManager = {
     scenes: ['scene-01', 'scene-02', 'scene-03', 'scene-04'],
     currentSceneId: 'scene-01',
@@ -170,8 +207,18 @@ document.addEventListener('DOMContentLoaded', () => {
           const txt2 = document.getElementById('scene1-text-2');
           if (txt2) txt2.classList.remove('hidden');
         }, 1200);
+      } else if (sceneId === 'scene-02') {
+        this.runFootstepDustPuff();
       } else if (sceneId === 'scene-04') {
         this.runScene4CombatSequence();
+      }
+    },
+
+    runFootstepDustPuff() {
+      const dust = document.getElementById('footstep-dust');
+      if (dust) {
+        dust.classList.add('puff');
+        setTimeout(() => dust.classList.remove('puff'), 600);
       }
     },
 
@@ -207,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // 6. Scene Interactions
+  // 8. Scene Interactions
   const btnStart = document.getElementById('btn-scene1-start');
   if (btnStart) {
     btnStart.addEventListener('click', () => {
@@ -287,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 7. Fire Ember Particle Engine
+  // 9. Multi-Category Canvas 2D Particle Engine
   const canvas = document.getElementById('particle-canvas');
   if (canvas) {
     const ctx = canvas.getContext('2d');
@@ -299,23 +346,45 @@ document.addEventListener('DOMContentLoaded', () => {
       height = canvas.height = window.innerHeight;
     });
 
-    class EmberParticle {
-      constructor() { this.reset(); }
+    class Particle {
+      constructor(type) {
+        this.type = type; // 'ember', 'ash', 'fog'
+        this.reset();
+      }
+
       reset() {
         this.x = Math.random() * width;
         this.y = Math.random() * height + height;
-        this.size = Math.random() * 3 + 1;
-        this.speedY = Math.random() * 1.5 + 0.4;
-        this.speedX = (Math.random() - 0.5) * 0.8;
-        this.opacity = Math.random() * 0.8 + 0.2;
-        this.color = Math.random() > 0.4 ? '#D77A27' : '#B84320';
+
+        if (this.type === 'fog') {
+          this.size = Math.random() * 40 + 20;
+          this.speedY = Math.random() * 0.5 + 0.1;
+          this.speedX = (Math.random() - 0.5) * 0.4;
+          this.opacity = Math.random() * 0.15 + 0.05;
+          this.color = '#D6B36A';
+        } else if (this.type === 'ash') {
+          this.size = Math.random() * 2 + 0.5;
+          this.speedY = Math.random() * 1.0 + 0.2;
+          this.speedX = (Math.random() - 0.5) * 1.2;
+          this.opacity = Math.random() * 0.5 + 0.2;
+          this.color = '#A0A0A0';
+        } else {
+          // Ember
+          this.size = Math.random() * 3 + 1;
+          this.speedY = Math.random() * 1.6 + 0.4;
+          this.speedX = (Math.random() - 0.5) * 0.8;
+          this.opacity = Math.random() * 0.8 + 0.2;
+          this.color = Math.random() > 0.4 ? '#D77A27' : '#B84320';
+        }
       }
+
       update() {
         this.y -= this.speedY;
         this.x += this.speedX;
-        this.opacity -= 0.002;
-        if (this.y < -10 || this.opacity <= 0) this.reset();
+        this.opacity -= 0.0015;
+        if (this.y < -30 || this.opacity <= 0) this.reset();
       }
+
       draw() {
         ctx.save();
         ctx.globalAlpha = this.opacity;
@@ -327,10 +396,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    const particles = Array.from({ length: 35 }, () => new EmberParticle());
+    const embers = Array.from({ length: 30 }, () => new Particle('ember'));
+    const ashes = Array.from({ length: 15 }, () => new Particle('ash'));
+    const fogs = Array.from({ length: 8 }, () => new Particle('fog'));
+    const allParticles = [...embers, ...ashes, ...fogs];
+
     function renderParticles() {
       ctx.clearRect(0, 0, width, height);
-      particles.forEach(p => { p.update(); p.draw(); });
+      allParticles.forEach(p => { p.update(); p.draw(); });
       requestAnimationFrame(renderParticles);
     }
     renderParticles();
