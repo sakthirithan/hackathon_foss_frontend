@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const audio = new Audio(`../../assets/audio/combat/${fileName}`);
     audio.volume = 0.4;
-    audio.play().catch(() => {});
+    audio.play().catch(() => { });
   }
 
   function updateScore(amount) {

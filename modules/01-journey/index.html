@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>குறள் வீரப் பயணம் — அத்தியாயம் 1: பயணம்</title>
+  <title>குறள் வீரப் பயணம் — அத்தியாயம் 01: பயணம்</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,72 +11,165 @@
 
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-temple">
+<body class="bg-dark-world">
 
-  <!-- HTML5 Canvas for Embers -->
-  <canvas id="particle-canvas"></canvas>
+  <!-- Canvas for Fire Embers & Particle Fog -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
 
-  <!-- Ambient Light Overlay -->
-  <div class="light-overlay" id="light-overlay"></div>
+  <!-- Ambient Light Vignette & Overlay -->
+  <div class="cinematic-vignette" id="vignette-overlay"></div>
 
-  <!-- App Wrapper -->
   <div id="app-wrapper">
 
-    <!-- Minimal Game HUD Header Bar -->
-    <header class="game-header">
-      <div class="header-left">
-        <span class="game-logo-icon">⚔️</span>
-        <span class="game-title-sm">குறள் வீரப் பயணம் — பயணம்</span>
+    <!-- HUD Header -->
+    <header class="game-hud-header">
+      <div class="hud-left">
+        <span class="hud-icon">⚔️</span>
+        <span class="hud-title">குறள் வீரப் பயணம்</span>
       </div>
 
-      <div class="header-center">
-        <div class="stage-progress-container">
-          <div class="stage-progress-bar" style="width: 25%;"></div>
+      <div class="hud-center">
+        <div class="progress-track">
+          <div class="progress-fill" id="hud-progress-bar" style="width: 25%;"></div>
         </div>
-        <span class="level-badge">அத்தியாயம் 01</span>
+        <span class="chapter-badge">அத்தியாயம் 01</span>
       </div>
 
-      <div class="header-right">
-        <div class="score-card">
+      <div class="hud-right">
+        <div class="score-pill">
           <span class="score-icon">🛡️</span>
-          <span class="score-value" id="score-display">0</span>
+          <span class="score-val" id="score-display">0</span>
         </div>
 
-        <button class="icon-btn sound-btn" id="sound-btn" aria-label="ஒலி மாற்று">
+        <button class="hud-icon-btn" id="sound-btn" aria-label="ஒலி அமைப்புகள்">
           <span id="sound-icon">🔊</span>
         </button>
       </div>
     </header>
 
-    <main class="story-scroll-container">
+    <!-- MAIN SCENE CONTAINER -->
+    <main class="viewport-stage" id="viewport-stage">
 
-      <!-- HERO / JOURNEY START SCENE -->
-      <section class="story-scene-section">
-        <div class="scene-environment-layer">
-          <div class="bg-env-image"></div>
-          <div class="distant-smoke-layer"></div>
-        </div>
+      <!-- SCENE 01: WORLD AWAKENING -->
+      <section class="game-scene active-scene" id="scene-01" aria-label="உலக விழிப்பு">
+        <div class="parallax-bg-layer bg-temple-img" id="scene1-bg"></div>
+        <div class="parallax-mid-layer smoke-mist-layer"></div>
 
-        <div class="scene-content-overlay">
-          <div class="scene-kural-banner">
-            <p class="kural-line">அழிவின்றி அறைபோகா தாகி</p>
-            <p class="kural-line">வழிவந்த வன்க ணதுவே படை.</p>
+        <div class="scene-cinematic-content">
+          <div class="kural-header-badge">
+            <p class="kural-sub-title">திருக்குறள் நெறி</p>
+            <h1 class="kural-main-heading">அழிவின்றி அறைபோகா தாகி<br>வழிவந்த வன்க ணதுவே படை.</h1>
           </div>
 
-          <div class="battle-card-window">
-            <div class="character-visual-container warrior-idle-pose">
-              <div class="character-aura"></div>
-              <img src="../../assets/images/characters/warrior_front.png" alt="வீரன்" class="warrior-render-img">
+          <div class="stage-hero-container zoom-in-hero">
+            <div class="hero-aura-glow"></div>
+            <img src="../../assets/images/characters/warrior_front.png" 
+                 alt="வீரன்" 
+                 class="warrior-render-img" 
+                 id="scene1-warrior-img"
+                 onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 300\'><path d=\'M100 20 L130 80 L160 120 L150 280 L50 280 L40 120 L70 80 Z\' fill=\'%23D77A27\' opacity=\'0.8\'/><circle cx=\'100\' cy=\'50\' r=\'25\' fill=\'%23F1D7A0\'/><rect x=\'85\' y=\'100\' width=\'30\' height=\'150\' fill=\'%23B84320\'/></svg>';">
+          </div>
+
+          <div class="cinematic-dialogue-card">
+            <p class="dialogue-line" id="scene1-text-1">ஒரு வீரனின் பயணம்.</p>
+            <p class="dialogue-line gold-text hidden" id="scene1-text-2">ஒரு குறளின் உண்மை.</p>
+          </div>
+
+          <div class="scene-interactive-actions">
+            <button class="action-game-btn glow-ember" id="btn-scene1-start">
+              ⚔️ பயணத்தைத் தொடங்கு
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 02: SOLITUDE (தனியாக) -->
+      <section class="game-scene hidden-scene" id="scene-02" aria-label="தனியாக">
+        <div class="parallax-bg-layer bg-mountain-img" id="scene2-bg"></div>
+        <div class="parallax-mid-layer fog-moving-layer"></div>
+
+        <div class="scene-cinematic-content">
+          <div class="stage-hero-container walk-hero-pose">
+            <img src="../../assets/images/characters/warrior_side.png" 
+                 alt="நடக்கும் வீரன்" 
+                 class="warrior-render-img" 
+                 id="scene2-warrior-img"
+                 onerror="this.onerror=null; this.src='../../assets/images/characters/warrior_front.png';">
+          </div>
+
+          <div class="cinematic-dialogue-card">
+            <h2 class="scene-heading-title">தனியாகப் பயணம் தொடங்குகிறது.</h2>
+            <p class="subtitle-desc">எதிர்காலச் சவால்களை நோக்கி வீரன் மலையிடுக்கில் முன்னேறுகிறான்...</p>
+          </div>
+
+          <div class="scene-interactive-actions">
+            <button class="action-game-btn glow-ember" id="btn-scene2-advance">
+              ⚔️ முன்னேறு
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 03: FIRST CHALLENGE (முதல் சவால்) -->
+      <section class="game-scene hidden-scene" id="scene-03" aria-label="முதல் சவால்">
+        <div class="parallax-bg-layer bg-battlefield-img" id="scene3-bg"></div>
+        <div class="parallax-mid-layer fire-smoke-layer"></div>
+
+        <div class="scene-cinematic-content">
+          <div class="combat-duo-container">
+            <div class="warrior-combat-box" id="scene3-warrior-box">
+              <img src="../../assets/images/characters/warrior_battle.png" 
+                   alt="வீரன்" 
+                   class="warrior-render-img"
+                   onerror="this.onerror=null; this.src='../../assets/images/characters/warrior_front.png';">
+            </div>
+            
+            <div class="vs-divider-icon">⚔️</div>
+
+            <div class="enemy-combat-box" id="scene3-enemy-box">
+              <img src="../../assets/images/enemies/enemy_warrior.png" 
+                   alt="எதிரி வீரன்" 
+                   class="enemy-render-img"
+                   onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 300\'><path d=\'M100 30 L140 90 L160 280 L40 280 L60 90 Z\' fill=\'%23B84320\'/><circle cx=\'100\' cy=\'55\' r=\'25\' fill=\'%235A3A25\'/></svg>';">
             </div>
           </div>
 
-          <div class="cinematic-subtitle-box">
-            <p class="subtitle-text">ஒரு வீரன் தனியாகப் பயணத்தைத் தொடங்குகிறான்...</p>
+          <div class="cinematic-dialogue-card">
+            <h2 class="scene-heading-title">முதல் சவால்.</h2>
+            <p class="subtitle-desc" id="scene3-sub-text">முன்னால் எதிரி நிற்கிறான். பின்வாங்குவாயா?</p>
           </div>
 
-          <div class="scene-action-bar">
-            <button class="game-btn glow-red" id="start-journey-btn">
-              ⚔️ போருக்குச் செல் (அடுத்த அத்தியாயம்)
+          <div class="scene-interactive-actions dual-choice">
+            <button class="action-game-btn glow-red" id="btn-scene3-fight">
+              ⚔️ முன்னேறு
+            </button>
+            <button class="action-game-btn btn-secondary" id="btn-scene3-retreat">
+              ↩️ பின்வாங்கு
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 04: FIRST COMBAT SETUP (போர் தொடக்கம்) -->
+      <section class="game-scene hidden-scene" id="scene-04" aria-label="போர் தொடக்கம்">
+        <div class="parallax-bg-layer bg-battlefield-img" id="scene4-bg"></div>
+        <div class="impact-flash-layer" id="impact-flash"></div>
+
+        <div class="scene-cinematic-content">
+          <div class="combat-clash-container" id="clash-container">
+            <img src="../../assets/images/characters/warrior_battle.png" alt="வீரன்" class="warrior-render-img clash-warrior" id="scene4-hero">
+            <div class="clash-spark-effect" id="clash-spark">💥</div>
+            <img src="../../assets/images/enemies/enemy_warrior.png" alt="எதிரி" class="enemy-render-img clash-enemy" id="scene4-enemy">
+          </div>
+
+          <div class="cinematic-dialogue-card">
+            <h2 class="scene-heading-title gold-glow-title" id="scene4-status-title">போர் தொடங்கியது!</h2>
+            <p class="subtitle-desc">அடுத்த அத்தியாயத்தில் பெரும் போர் காத்துள்ளது!</p>
+          </div>
+
+          <div class="scene-interactive-actions">
+            <button class="action-game-btn glow-ember pulse-btn" id="btn-scene4-enter-battle">
+              ⚔️ போர்க்களத்திற்குச் செல் (அத்தியாயம் 02)
             </button>
           </div>
         </div>

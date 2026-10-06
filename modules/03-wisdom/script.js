@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let fileName = type === 'victory' ? 'victory.wav' : (type === 'clash' ? 'sword-hit.wav' : 'click.wav');
     const audio = new Audio(`../../assets/audio/victory/${fileName}`);
     audio.volume = 0.4;
-    audio.play().catch(() => {});
+    audio.play().catch(() => { });
   }
 
   function updateScore(amount) {

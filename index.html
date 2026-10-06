@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ta">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,18 +16,24 @@
       justify-content: center;
       height: 100vh;
     }
+
     .loading-box {
       text-align: center;
     }
+
     .loading-spinner {
       font-size: 3rem;
       animation: spin 1s linear infinite;
     }
+
     @keyframes spin {
-      100% { transform: rotate(360deg); }
+      100% {
+        transform: rotate(360deg);
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="loading-box">
     <div class="loading-spinner">⚔️</div>
@@ -43,7 +50,7 @@
         if (parsed && parsed.currentModule) {
           currentModule = parsed.currentModule;
         }
-      } catch (e) {}
+      } catch (e) { }
     }
 
     // Redirect to active module index.html
@@ -56,4 +63,5 @@
     }
   </script>
 </body>
+
 </html>
