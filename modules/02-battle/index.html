@@ -13,11 +13,14 @@
 </head>
 <body class="bg-battlefield">
 
+  <!-- Ambient Particle Canvas & Light Overlay -->
   <canvas id="particle-canvas"></canvas>
   <div class="light-overlay"></div>
 
-  <div id="app-wrapper">
-    <!-- Game Header HUD -->
+  <!-- Screen Shake Wrapper -->
+  <div id="shake-wrapper">
+
+    <!-- Fixed Game HUD Header -->
     <header class="game-header">
       <div class="header-left">
         <span class="game-logo-icon">⚔️</span>
@@ -26,7 +29,7 @@
 
       <div class="header-center">
         <div class="stage-progress-container">
-          <div class="stage-progress-bar" id="progress-bar" style="width: 50%;"></div>
+          <div class="stage-progress-bar" id="progress-bar" style="width: 20%;"></div>
         </div>
         <span class="level-badge" id="level-badge">அத்தியாயம் 02</span>
       </div>
@@ -43,12 +46,13 @@
       </div>
     </header>
 
+    <!-- Floating Score Animation Container -->
     <div id="floating-score-container"></div>
 
     <main class="story-scroll-container">
 
-      <!-- SCENE 2: முதல் போர் (TYPE 1 BATTLE — DUEL) -->
-      <section class="story-scene-section" id="battle-scene-1">
+      <!-- SCENE 01: முதல் போர் (TYPE 1 BATTLE — DUEL) -->
+      <section class="story-scene-section" id="scene-duel">
         <div class="scene-environment-layer">
           <div class="bg-env-image"></div>
           <div class="distant-smoke-layer"></div>
@@ -58,46 +62,44 @@
           <div class="battle-card-window">
             <div class="battle-health-hud">
               <div class="health-unit">
-                <span class="unit-name">🛡️ வீரன்</span>
-                <div class="hp-bar-track"><div class="hp-bar-fill warrior-hp" id="warrior-hp-bar"></div></div>
+                <span class="unit-name">🛡️ வீரன் HP</span>
+                <div class="hp-bar-track"><div class="hp-bar-fill warrior-hp" id="warrior-hp-1"></div></div>
               </div>
               <div class="health-unit">
-                <span class="unit-name">⚔️ எதிரி</span>
-                <div class="hp-bar-track"><div class="hp-bar-fill enemy-hp" id="enemy-hp-bar"></div></div>
+                <span class="unit-name">⚔️ எதிரி HP</span>
+                <div class="hp-bar-track"><div class="hp-bar-fill enemy-hp" id="enemy-hp-1"></div></div>
               </div>
             </div>
 
             <div class="battle-arena-box">
-              <div class="impact-flash" id="impact-flash"></div>
-              <div class="battle-unit warrior-unit" id="anim-warrior">
+              <div class="impact-flash" id="impact-flash-1"></div>
+              <div class="battle-unit warrior-unit" id="anim-warrior-1">
                 <img src="../../assets/images/characters/warrior_battle.png" alt="வீரன்" class="unit-sprite-img warrior-sprite">
               </div>
-              <div class="battle-clash-symbol" id="anim-clash">
+              <div class="battle-clash-symbol" id="anim-clash-1">
                 <img src="../../assets/images/weapons/weapon_axe.png" alt="கோடாரி" class="weapon-clash-img">
               </div>
-              <div class="battle-unit enemy-unit" id="anim-enemy">
+              <div class="battle-unit enemy-unit" id="anim-enemy-1">
                 <img src="../../assets/images/enemies/enemy_warrior.png" alt="எதிரி" class="unit-sprite-img enemy-sprite">
               </div>
             </div>
           </div>
 
           <div class="cinematic-subtitle-box">
-            <p class="subtitle-text">எதிரிகள் சூழ்ந்தனர்! போரிட்டு முன்னேறு!</p>
+            <p class="subtitle-text" id="sub-text-1">எதிரி வீரன் முன்னேறுகிறான்! போரிட்டு சவாலைச் சந்தி!</p>
           </div>
 
           <div class="scene-action-bar">
-            <button class="game-btn glow-red" id="cmd-attack">⚔️ தாக்கு!</button>
-            <button class="game-btn glow-gold" id="cmd-block">🛡️ காப்பாற்று!</button>
-
-            <button class="game-btn glow-orange hidden" id="goto-fall-btn">
-              ➡️ தொடர்க (வீரன் சவால்)
-            </button>
+            <button class="game-btn glow-red" id="cmd-attack-1">⚔️ தாக்கு!</button>
+            <button class="game-btn glow-gold" id="cmd-block-1">🛡️ காப்பாற்று!</button>
+            <button class="game-btn glow-orange hidden" id="goto-fall-btn">➡️ தொடர்க (சவால்)</button>
           </div>
         </div>
       </section>
 
-      <!-- SCENE 3: வீரன் வீழ்கிறான் & எழுகிறான் ("அழிவின்றி") -->
-      <section class="story-scene-section hidden" id="battle-scene-2">
+
+      <!-- SCENE 02 & 03: வீரன் வீழ்ச்சி & மெதுவாக எழுதல் ("அழிவின்றி") -->
+      <section class="story-scene-section hidden" id="scene-fall-rise">
         <div class="scene-environment-layer">
           <div class="bg-env-image"></div>
           <div class="dark-defeat-overlay" id="dark-defeat-overlay"></div>
@@ -106,6 +108,7 @@
         <div class="scene-content-overlay">
           <div class="battle-card-window">
             <div class="character-visual-container warrior-rising-pose" id="warrior-pose-box">
+              <div class="hero-aura-glow" id="hero-aura-glow"></div>
               <img src="../../assets/images/characters/warrior_side.png" alt="வீரன்" class="warrior-render-img" id="rising-warrior-img">
               <div class="pose-label-text" id="pose-text">💥 "அடிபட்ட வீரன் கீழே விழுந்தான்..."</div>
             </div>
@@ -118,12 +121,165 @@
           </div>
 
           <div class="scene-action-bar">
-            <button class="game-btn glow-orange" id="cmd-rise-up">
-              🔥 தளராதே! எழ முயல்
-            </button>
-            <button class="game-btn glow-gold hidden" id="goto-wisdom-btn">
-              ✨ ஞான சோதனைகளுக்குச் செல் (அடுத்த அத்தியாயம்)
-            </button>
+            <button class="game-btn glow-orange" id="cmd-rise-up">🔥 தளராதே! எழ முயல்</button>
+            <button class="game-btn glow-gold hidden" id="goto-courage-btn">⚔️ படைக்கு எதிராக நில்</button>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- SCENE 04: "அறைபோகா" (Stand Firm Against Enemy Army) -->
+      <section class="story-scene-section hidden" id="scene-courage">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+          <div class="army-horizon-overlay"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="battle-card-window">
+            <div class="character-visual-container">
+              <div class="courage-stand-box">
+                <img src="../../assets/images/characters/warrior_front.png" alt="வீரன்" class="warrior-render-img warrior-courage-img">
+                <div class="enemy-army-horizon">
+                  <img src="../../assets/images/enemies/enemy_warrior.png" alt="பகைவர் படை" class="horizon-enemy-silhouette e1">
+                  <img src="../../assets/images/enemies/enemy_warrior.png" alt="பகைவர் படை" class="horizon-enemy-silhouette e2">
+                  <img src="../../assets/images/enemies/enemy_warrior.png" alt="பகைவர் படை" class="horizon-enemy-silhouette e3">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="word-reveal-title" id="word-reveal-2">💥 அறைபோகா</div>
+
+          <div class="cinematic-subtitle-box">
+            <p class="subtitle-text" id="sub-text-3">பகைவர் படை சூழ்ந்தாலும், அஞ்சாமல் நிமிரும் துணிவு!</p>
+          </div>
+
+          <div class="scene-action-bar">
+            <button class="game-btn glow-red" id="cmd-courage-stand">🔥 துணிவுடன் நில்!</button>
+            <button class="game-btn glow-gold hidden" id="goto-allies-btn">🤝 நண்பர்கள் வரவழை</button>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- SCENE 05: "வழிவந்த" (Allies Arrive & Battle Line) -->
+      <section class="story-scene-section hidden" id="scene-allies">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="battle-card-window">
+            <div class="allies-formation-container" id="allies-container">
+              <div class="ally-unit main-hero">
+                <img src="../../assets/images/characters/warrior_front.png" alt="வீரன் 1" class="ally-img">
+                <span class="unit-tag">தலைவன்</span>
+              </div>
+              <div class="ally-unit ally-2 hidden" id="ally-unit-2">
+                <img src="../../assets/images/characters/warrior_battle.png" alt="வீரன் 2" class="ally-img">
+                <span class="unit-tag">தோழன் 1</span>
+              </div>
+              <div class="ally-unit ally-3 hidden" id="ally-unit-3">
+                <img src="../../assets/images/characters/warrior_side.png" alt="வீரன் 3" class="ally-img">
+                <span class="unit-tag">தோழன் 2</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="word-reveal-title" id="word-reveal-3">👥 வழிவந்த</div>
+
+          <div class="cinematic-subtitle-box">
+            <p class="subtitle-text" id="sub-text-4">தனியாக நின்ற வீரனுக்கு தோழர்கள் துணையாக வந்து சேர்ந்தனர்!</p>
+          </div>
+
+          <div class="scene-action-bar">
+            <button class="game-btn glow-orange" id="cmd-call-allies">🤝 தோழர்களை இணை!</button>
+            <button class="game-btn glow-gold hidden" id="goto-army-btn">🛡️ பெரும் படையை திரட்டு</button>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- SCENE 06: "படை" (Full Army Formation & Squad Combat) -->
+      <section class="story-scene-section hidden" id="scene-army">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+          <div class="army-ranks-bg"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="battle-card-window">
+            <div class="army-display-box">
+              <div class="banner-crest">🛡️ தமிழ் வீரப் படை 🛡️</div>
+              <div class="army-ranks-grid">
+                <img src="../../assets/images/characters/warrior_front.png" class="army-soldier-img s1" alt="படை">
+                <img src="../../assets/images/characters/warrior_battle.png" class="army-soldier-img s2" alt="படை">
+                <img src="../../assets/images/characters/warrior_side.png" class="army-soldier-img s3" alt="படை">
+                <img src="../../assets/images/characters/warrior_back.png" class="army-soldier-img s4" alt="படை">
+              </div>
+            </div>
+          </div>
+
+          <div class="word-reveal-title" id="word-reveal-4">🛡️ வன்கணதுவே படை</div>
+
+          <div class="cinematic-subtitle-box">
+            <p class="subtitle-text" id="sub-text-5">ஒன்றாகத் திரண்ட வீரர்களின் அஞ்சாத பெரும் படை!</p>
+          </div>
+
+          <div class="scene-action-bar">
+            <button class="game-btn glow-red" id="cmd-squad-attack">⚔️ ஒன்றாகத் தாக்கு!</button>
+            <button class="game-btn glow-gold hidden" id="goto-boss-btn">🔥 இறுதி அரக்கனை எதிர்கொள்</button>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- SCENE 07: இறுதி அரக்கன் (GIANT BOSS BATTLE) -->
+      <section class="story-scene-section hidden" id="scene-boss">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+          <div class="boss-red-fog"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="battle-card-window">
+            <div class="battle-health-hud">
+              <div class="health-unit">
+                <span class="unit-name">🛡️ வீரன் + படை HP</span>
+                <div class="hp-bar-track"><div class="hp-bar-fill warrior-hp" id="boss-warrior-hp"></div></div>
+              </div>
+              <div class="health-unit">
+                <span class="unit-name">🔥 பய அரக்கன் (Boss) HP</span>
+                <div class="hp-bar-track"><div class="hp-bar-fill enemy-hp" id="boss-enemy-hp"></div></div>
+              </div>
+            </div>
+
+            <div class="boss-arena-box">
+              <div class="impact-flash" id="boss-impact-flash"></div>
+              
+              <div class="boss-hero-squad" id="boss-hero-squad">
+                <img src="../../assets/images/characters/warrior_battle.png" alt="தலைவன்" class="boss-hero-img" id="boss-warrior-img">
+                <img src="../../assets/images/weapons/weapon_axe.png" alt="ஆயுதம்" class="boss-weapon-img" id="boss-weapon-img">
+              </div>
+
+              <div class="boss-clash-symbol" id="boss-clash-symbol">💥</div>
+
+              <div class="boss-render-unit" id="boss-unit">
+                <img src="../../assets/images/enemies/enemy_boss.png" alt="அரக்கன்" class="boss-sprite-img" id="boss-sprite-img">
+              </div>
+            </div>
+          </div>
+
+          <div class="cinematic-subtitle-box">
+            <p class="subtitle-text" id="sub-text-boss">பய அரக்கன் தோன்றினான்! படையுடன் இணைந்து தாக்கி வெல்!</p>
+          </div>
+
+          <div class="scene-action-bar">
+            <button class="game-btn glow-red" id="cmd-boss-attack">⚔️ கூட்டுத் தாக்குதல்!</button>
+            <button class="game-btn glow-gold" id="cmd-boss-block">🛡️ தடுப்பு!</button>
+            <button class="game-btn glow-orange hidden" id="cmd-boss-rise">🔥 எழுந்து தாக்கு!</button>
+            <button class="game-btn glow-gold hidden" id="goto-wisdom-module-btn">✨ ஞான சோதனைகளுக்குச் செல் (அடுத்த அத்தியாயம்)</button>
           </div>
         </div>
       </section>
