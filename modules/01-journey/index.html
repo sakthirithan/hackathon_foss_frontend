@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>குறள் வீரப் பயணம் — அத்தியாயம் 1: பயணம்</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;700;800;900&family=Mukta+Malar:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-temple">
+
+  <!-- HTML5 Canvas for Embers -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Ambient Light Overlay -->
+  <div class="light-overlay" id="light-overlay"></div>
+
+  <!-- App Wrapper -->
+  <div id="app-wrapper">
+
+    <!-- Minimal Game HUD Header Bar -->
+    <header class="game-header">
+      <div class="header-left">
+        <span class="game-logo-icon">⚔️</span>
+        <span class="game-title-sm">குறள் வீரப் பயணம் — பயணம்</span>
+      </div>
+
+      <div class="header-center">
+        <div class="stage-progress-container">
+          <div class="stage-progress-bar" style="width: 25%;"></div>
+        </div>
+        <span class="level-badge">அத்தியாயம் 01</span>
+      </div>
+
+      <div class="header-right">
+        <div class="score-card">
+          <span class="score-icon">🛡️</span>
+          <span class="score-value" id="score-display">0</span>
+        </div>
+
+        <button class="icon-btn sound-btn" id="sound-btn" aria-label="ஒலி மாற்று">
+          <span id="sound-icon">🔊</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="story-scroll-container">
+
+      <!-- HERO / JOURNEY START SCENE -->
+      <section class="story-scene-section">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+          <div class="distant-smoke-layer"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="scene-kural-banner">
+            <p class="kural-line">அழிவின்றி அறைபோகா தாகி</p>
+            <p class="kural-line">வழிவந்த வன்க ணதுவே படை.</p>
+          </div>
+
+          <div class="battle-card-window">
+            <div class="character-visual-container warrior-idle-pose">
+              <div class="character-aura"></div>
+              <svg viewBox="0 0 300 380" class="warrior-svg">
+                <defs>
+                  <radialGradient id="gradEmber" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#D77A27" stop-opacity="0.8" />
+                    <stop offset="100%" stop-color="#8B2E1E" stop-opacity="0" />
+                  </radialGradient>
+                  <linearGradient id="gradAxe" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#F1D7A0" />
+                    <stop offset="50%" stop-color="#D6B36A" />
+                    <stop offset="100%" stop-color="#8B2E1E" />
+                  </linearGradient>
+                </defs>
+                <circle cx="150" cy="190" r="140" fill="url(#gradEmber)" />
+                <path d="M 60 140 Q 60 250 115 310 Q 115 250 115 140 Z" fill="#1A1512" stroke="#D6B36A" stroke-width="4" />
+                <circle cx="88" cy="200" r="12" fill="#D77A27" />
+                <path d="M 120 110 Q 80 200 70 330 L 230 330 Q 220 200 180 110 Z" fill="#8B2E1E" />
+                <path d="M 110 110 L 190 110 L 205 250 L 95 250 Z" fill="#30251D" stroke="#5A3A25" stroke-width="3" />
+                <ellipse cx="150" cy="75" rx="28" ry="34" fill="#30251D" stroke="#5A3A25" stroke-width="2" />
+                <path d="M 135 70 L 165 70 L 150 82 Z" fill="#B84320" />
+                <circle cx="140" cy="72" r="3" fill="#F1D7A0" />
+                <circle cx="160" cy="72" r="3" fill="#F1D7A0" />
+                <g class="weapon-arm-group">
+                  <path d="M 205 50 L 220 320" stroke="#5A3A25" stroke-width="8" stroke-linecap="round" />
+                  <path d="M 205 20 L 240 60 L 180 60 Z" fill="url(#gradAxe)" stroke="#F1D7A0" stroke-width="2" />
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <div class="cinematic-subtitle-box">
+            <p class="subtitle-text">ஒரு வீரன் தனியாகப் பயணத்தைத் தொடங்குகிறான்...</p>
+          </div>
+
+          <div class="scene-action-bar">
+            <button class="game-btn glow-red" id="start-journey-btn">
+              ⚔️ போருக்குச் செல் (அடுத்த அத்தியாயம்)
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

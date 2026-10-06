@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>குறள் வீரப் பயணம் — அத்தியாயம் 2: போர்</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;700;800;900&family=Mukta+Malar:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-battlefield">
+
+  <canvas id="particle-canvas"></canvas>
+  <div class="light-overlay"></div>
+
+  <div id="app-wrapper">
+    <!-- Game Header HUD -->
+    <header class="game-header">
+      <div class="header-left">
+        <span class="game-logo-icon">⚔️</span>
+        <span class="game-title-sm">குறள் வீரப் பயணம் — போர்</span>
+      </div>
+
+      <div class="header-center">
+        <div class="stage-progress-container">
+          <div class="stage-progress-bar" id="progress-bar" style="width: 50%;"></div>
+        </div>
+        <span class="level-badge" id="level-badge">அத்தியாயம் 02</span>
+      </div>
+
+      <div class="header-right">
+        <div class="score-card">
+          <span class="score-icon">🛡️</span>
+          <span class="score-value" id="score-display">0</span>
+        </div>
+
+        <button class="icon-btn sound-btn" id="sound-btn" aria-label="ஒலி மாற்று">
+          <span id="sound-icon">🔊</span>
+        </button>
+      </div>
+    </header>
+
+    <div id="floating-score-container"></div>
+
+    <main class="story-scroll-container">
+
+      <!-- SCENE 2: முதல் போர் (TYPE 1 BATTLE — DUEL) -->
+      <section class="story-scene-section" id="battle-scene-1">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+          <div class="distant-smoke-layer"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="battle-card-window">
+            <div class="battle-health-hud">
+              <div class="health-unit">
+                <span class="unit-name">🛡️ வீரன்</span>
+                <div class="hp-bar-track"><div class="hp-bar-fill warrior-hp" id="warrior-hp-bar"></div></div>
+              </div>
+              <div class="health-unit">
+                <span class="unit-name">⚔️ எதிரி</span>
+                <div class="hp-bar-track"><div class="hp-bar-fill enemy-hp" id="enemy-hp-bar"></div></div>
+              </div>
+            </div>
+
+            <div class="battle-arena-box">
+              <div class="impact-flash" id="impact-flash"></div>
+              <div class="battle-unit warrior-unit" id="anim-warrior">🛡️ வீரன்</div>
+              <div class="battle-clash-symbol" id="anim-clash">💥</div>
+              <div class="battle-unit enemy-unit" id="anim-enemy">⚔️ எதிரி</div>
+            </div>
+          </div>
+
+          <div class="cinematic-subtitle-box">
+            <p class="subtitle-text">எதிரிகள் சூழ்ந்தனர்! போரிட்டு முன்னேறு!</p>
+          </div>
+
+          <div class="scene-action-bar">
+            <button class="game-btn glow-red" id="cmd-attack">⚔️ தாக்கு!</button>
+            <button class="game-btn glow-gold" id="cmd-block">🛡️ காப்பாற்று!</button>
+
+            <button class="game-btn glow-orange hidden" id="goto-fall-btn">
+              ➡️ தொடர்க (வீரன் சவால்)
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 3: வீரன் வீழ்கிறான் & எழுகிறான் ("அழிவின்றி") -->
+      <section class="story-scene-section hidden" id="battle-scene-2">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+          <div class="dark-defeat-overlay" id="dark-defeat-overlay"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="battle-card-window">
+            <div class="character-visual-container warrior-rising-pose" id="warrior-pose-box">
+              <div class="pose-label-text" id="pose-text">💥 "அடிபட்ட வீரன் கீழே விழுந்தான்..."</div>
+            </div>
+          </div>
+
+          <div class="word-reveal-title hidden" id="word-reveal-1">🛡️ அழிவின்றி</div>
+
+          <div class="cinematic-subtitle-box">
+            <p class="subtitle-text" id="sub-text-2">வீரன் போரில் பலத்த காயமடைந்து கீழே விழுந்தான்...</p>
+          </div>
+
+          <div class="scene-action-bar">
+            <button class="game-btn glow-orange" id="cmd-rise-up">
+              🔥 தளராதே! எழ முயல்
+            </button>
+            <button class="game-btn glow-gold hidden" id="goto-wisdom-btn">
+              ✨ ஞான சோதனைகளுக்குச் செல் (அடுத்த அத்தியாயம்)
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
