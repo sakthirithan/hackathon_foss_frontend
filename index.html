@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>குறள் வீரப் பயணம் — Thirukkural Cinematic Story Quest</title>
+
+  <!-- Google Fonts for Tamil Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;700;800;900&family=Mukta+Malar:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-temple">
+
+  <!-- HTML5 Canvas for Embers, Sparks & Ash Particles -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Vignette & Dynamic Light Overlay -->
+  <div class="light-overlay" id="light-overlay"></div>
+
+  <!-- Main Scrollable App Wrapper -->
+  <div id="app-wrapper">
+
+    <!-- Minimal Game HUD Header Bar -->
+    <header class="game-header" id="game-header">
+      <div class="header-left">
+        <span class="game-logo-icon">⚔️</span>
+        <span class="game-title-sm">குறள் வீரப் பயணம்</span>
+      </div>
+
+      <div class="header-center">
+        <div class="stage-progress-container" title="கதை முன்னேற்றம்">
+          <div class="stage-progress-bar" id="progress-bar"></div>
+        </div>
+        <span class="level-badge" id="level-badge">பயணம் 01 / 12</span>
+      </div>
+
+      <div class="header-right">
+        <div class="score-card" id="score-card">
+          <span class="score-icon">🛡️</span>
+          <span class="score-value" id="score-display">0</span>
+        </div>
+
+        <button class="icon-btn sound-btn" id="sound-btn" aria-label="ஒலி மாற்று">
+          <span id="sound-icon">🔊</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Floating Score Animation Container -->
+    <div id="floating-score-container"></div>
+
+    <!-- MAIN SCROLLABLE STORY CONTAINER -->
+    <main class="story-scroll-container">
+
+      <!-- SCENE 1: வீரன் பிறந்தான் (WARRIOR AWAKENS) -->
+      <section class="story-scene-section" id="stage-1" data-bg="temple">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+          <div class="distant-smoke-layer"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="scene-kural-banner">
+            <p class="kural-line">அழிவின்றி அறைபோகா தாகி</p>
+            <p class="kural-line">வழிவந்த வன்க ணதுவே படை.</p>
+          </div>
+
+          <!-- Character Visual -->
+          <div class="character-visual-container warrior-idle-pose">
+            <div class="character-aura"></div>
+            <svg viewBox="0 0 300 380" class="warrior-svg">
+              <defs>
+                <radialGradient id="gradEmber" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#D77A27" stop-opacity="0.8" />
+                  <stop offset="100%" stop-color="#8B2E1E" stop-opacity="0" />
+                </radialGradient>
+                <linearGradient id="gradAxe" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#F1D7A0" />
+                  <stop offset="50%" stop-color="#D6B36A" />
+                  <stop offset="100%" stop-color="#8B2E1E" />
+                </linearGradient>
+              </defs>
+              <circle cx="150" cy="190" r="140" fill="url(#gradEmber)" />
+              <path d="M 60 140 Q 60 250 115 310 Q 115 250 115 140 Z" fill="#1A1512" stroke="#D6B36A" stroke-width="4" />
+              <circle cx="88" cy="200" r="12" fill="#D77A27" />
+              <path d="M 120 110 Q 80 200 70 330 L 230 330 Q 220 200 180 110 Z" fill="#8B2E1E" />
+              <path d="M 110 110 L 190 110 L 205 250 L 95 250 Z" fill="#30251D" stroke="#5A3A25" stroke-width="3" />
+              <ellipse cx="150" cy="75" rx="28" ry="34" fill="#30251D" stroke="#5A3A25" stroke-width="2" />
+              <path d="M 135 70 L 165 70 L 150 82 Z" fill="#B84320" />
+              <circle cx="140" cy="72" r="3" fill="#F1D7A0" />
+              <circle cx="160" cy="72" r="3" fill="#F1D7A0" />
+              <g class="weapon-arm-group">
+                <path d="M 205 50 L 220 320" stroke="#5A3A25" stroke-width="8" stroke-linecap="round" />
+                <path d="M 205 20 L 240 60 L 180 60 Z" fill="url(#gradAxe)" stroke="#F1D7A0" stroke-width="2" />
+              </g>
+            </svg>
+          </div>
+
+          <!-- Movie Subtitle Narration -->
+          <div class="cinematic-subtitle-box">
+            <p class="subtitle-text">ஒரு வீரன் தனியாகப் பயணத்தைத் தொடங்குகிறான்...</p>
+          </div>
+
+          <div class="scene-action-bar">
+            <button class="game-btn glow-red" id="start-journey-btn">
+              ⚔️ பயணத்தைத் தொடங்கு
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 2: போர்க்களம் (BATTLEFIELD AMBUSH) -->
+      <section class="story-scene-section" id="stage-2" data-bg="battlefield">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+          <div class="distant-smoke-layer"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <!-- 2.5D Battle Arena Display -->
+          <div class="battle-arena-box" id="battle-arena-3d">
+            <div class="impact-flash" id="impact-flash"></div>
+            <div class="battle-unit warrior-unit" id="anim-warrior">🛡️ வீரன்</div>
+            <div class="battle-clash-symbol" id="anim-clash">💥</div>
+            <div class="battle-unit enemy-unit" id="anim-enemy">⚔️ எதிரி</div>
+          </div>
+
+          <!-- Movie Subtitle Narration -->
+          <div class="cinematic-subtitle-box">
+            <p class="subtitle-text">எதிரிகள் சூழ்ந்தனர்! போரிட்டு முன்னேறு!</p>
+          </div>
+
+          <div class="scene-action-bar">
+            <button class="game-btn glow-red" id="cmd-attack">⚔️ தாக்கு!</button>
+            <button class="game-btn glow-gold" id="cmd-block">🛡️ காப்பாற்று!</button>
+
+            <button class="game-btn glow-orange hidden" id="goto-chap3-btn">
+              ➡️ அடுத்த காட்சிக்குச் செல்
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 3: தோல்வி & விழுதல் (WARRIOR FALLS) -->
+      <section class="story-scene-section" id="stage-3" data-bg="battlefield">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+          <div class="dark-defeat-overlay" id="dark-defeat-overlay"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="character-visual-container warrior-fallen-pose" id="warrior-fallen-box">
+            <div class="pose-label-text">💥 "அடிபட்ட வீரன் கீழே விழுகிறான்..."</div>
+          </div>
+
+          <!-- Movie Subtitle Narration -->
+          <div class="cinematic-subtitle-box">
+            <p class="subtitle-text">வீரன் போரில் பலத்த காயமடைந்து கீழே விழுந்தான்...</p>
+          </div>
+
+          <div class="scene-action-bar">
+            <button class="game-btn glow-orange" id="goto-chap4-btn">
+              🔥 தளராதே! எழ முயல்
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 4: எழுதல் (RISE UP — "அழிவின்றி") -->
+      <section class="story-scene-section" id="stage-4" data-bg="battlefield">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="character-visual-container warrior-rising-pose" id="warrior-rising-box">
+            <div class="pose-label-text">💪 "விழுந்தாலும் மீண்டு எழுந்தான்!"</div>
+          </div>
+
+          <div class="word-reveal-title">🛡️ அழிவின்றி</div>
+
+          <!-- Movie Subtitle Narration -->
+          <div class="cinematic-subtitle-box">
+            <p class="subtitle-text">எளிதில் அழியாமல், துன்பம் வந்தாலும் உறுதியோடு மீண்டும் எழுவது!</p>
+          </div>
+
+          <div class="scene-action-bar">
+            <button class="game-btn glow-gold" id="goto-chap5-btn">
+              ➡️ தொடர்க
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 5: துணிவு (COURAGE — "அறைபோகா") -->
+      <section class="story-scene-section" id="stage-5" data-bg="mountain">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="character-visual-container warrior-courage-pose">
+            <div class="pose-label-text">🦁 "பயந்து ஓடாமல் துணிவுடன் நிற்பது!"</div>
+          </div>
+
+          <div class="word-reveal-title">⚔️ அறைபோகா</div>
+
+          <!-- Movie Subtitle Narration -->
+          <div class="cinematic-subtitle-box">
+            <p class="subtitle-text">எதிரியைக் கண்டு அஞ்சி ஓடாமல், மன உறுதியோடு களத்தில் நிற்பது!</p>
+          </div>
+
+          <div class="scene-action-bar">
+            <button class="game-btn glow-gold" id="goto-chap6-btn">
+              ➡️ தோழர்களைச் சேர்
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 6: வீரர்கள் இணைதல் (UNITY — "வழிவந்த") -->
+      <section class="story-scene-section" id="stage-6" data-bg="mountain">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="character-visual-container warrior-unity-pose">
+            <div class="squad-icons-row">👥 🛡️ ⚔️ 🛡️</div>
+            <div class="pose-label-text">🤝 "வீரர்கள் ஒன்று கூடுகிறார்கள்!"</div>
+          </div>
+
+          <div class="word-reveal-title">👥 வழிவந்த</div>
+
+          <!-- Movie Subtitle Narration -->
+          <div class="cinematic-subtitle-box">
+            <p class="subtitle-text">நல்ல வழியில், ஒன்றாக இணைந்து நேர்மையோடு செயல்படுவது!</p>
+          </div>
+
+          <div class="scene-action-bar">
+            <button class="game-btn glow-gold" id="goto-chap7-btn">
+              ➡️ படையைப் பார்
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 7: உண்மையான படை (THE ARMY — "வன்கணதுவே படை.") -->
+      <section class="story-scene-section" id="stage-7" data-bg="temple">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="stone-tablet-wrapper">
+            <div class="stone-tablet">
+              <div class="stone-header">📜 முழு திருக்குறள்</div>
+              <div class="stone-kural">
+                <p class="stone-kural-line">அழிவின்றி அறைபோகா தாகி</p>
+                <p class="stone-kural-line">வழிவந்த வன்க ணதுவே படை.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Movie Subtitle Narration -->
+          <div class="cinematic-subtitle-box">
+            <p class="subtitle-text">தளராத மனம் + துணிவு + ஒற்றுமை = வெல்ல முடியாத படை!</p>
+          </div>
+
+          <div class="scene-action-bar">
+            <button class="game-btn glow-gold" id="goto-chap8-btn">
+              ✨ 4 விதிகளைப் பார்
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 8: 4 CORE IDEAS (தங்க விதிகள்) -->
+      <section class="story-scene-section" id="stage-8" data-bg="temple">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="section-title-box">
+            <h2 class="scene-main-title">வீரனின் 4 தங்க விதிகள்</h2>
+          </div>
+
+          <div class="core-ideas-grid">
+            <div class="idea-card" id="idea-1">
+              <span class="idea-icon">💪</span>
+              <div class="idea-text-wrap">
+                <h3 class="idea-title">தளராதே</h3>
+                <p class="idea-desc">துன்பம் வந்தாலும் சோர்ந்து போகாதே.</p>
+              </div>
+            </div>
+
+            <div class="idea-card" id="idea-2">
+              <span class="idea-icon">🦁</span>
+              <div class="idea-text-wrap">
+                <h3 class="idea-title">துணிவாக இரு</h3>
+                <p class="idea-desc">பயப்படாமல் நேர்மையோடு செயல்ப்படு.</p>
+              </div>
+            </div>
+
+            <div class="idea-card" id="idea-3">
+              <span class="idea-icon">🤝</span>
+              <div class="idea-text-wrap">
+                <h3 class="idea-title">ஒன்றாக இரு</h3>
+                <p class="idea-desc">எல்லோரிடமும் ஒற்றுமையாக இரு.</p>
+              </div>
+            </div>
+
+            <div class="idea-card" id="idea-4">
+              <span class="idea-icon">🛡️</span>
+              <div class="idea-text-wrap">
+                <h3 class="idea-title">கடமையை செய்</h3>
+                <p class="idea-desc">பொறுப்புகளைச் சரியாக நிறைவேற்று.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="scene-action-bar">
+            <button class="game-btn glow-red" id="goto-chap9-btn">
+              🎯 முதல் சவாலை எதிர்கொள்!
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 9: CHALLENGE 1 (MULTIPLE CHOICE) -->
+      <section class="story-scene-section" id="stage-9" data-bg="battlefield">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="quiz-container-box">
+            <div class="quiz-badge">வீரச் சோதனை 1</div>
+            <h2 class="quiz-question">ஒரு நல்ல படை எப்படி இருக்கும்?</h2>
+
+            <div class="options-container" id="challenge1-options">
+              <button class="option-btn" data-correct="false">அ — பயந்து ஓடும்</button>
+              <button class="option-btn" data-correct="false">ஆ — பிரிந்து செல்லும்</button>
+              <button class="option-btn" data-correct="true">இ — துணிவுடன் ஒன்றாக நிற்கும்</button>
+              <button class="option-btn" data-correct="false">ஈ — விட்டுச் செல்லும்</button>
+            </div>
+
+            <div class="feedback-modal hidden" id="challenge1-feedback">
+              <div class="feedback-icon">🎉</div>
+              <h3 class="feedback-title">அருமை!</h3>
+              <p class="feedback-desc">துணிவும் ஒற்றுமையும் ஒரு படையை வலிமையாக்கும்.</p>
+              <button class="game-btn glow-gold mt-4" id="goto-chap10-btn">
+                ➡️ அடுத்த சவாலுக்குச் செல்
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 10: CHALLENGE 2 (TEAM BUILDER) -->
+      <section class="story-scene-section" id="stage-10" data-bg="temple">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="section-title-box">
+            <h2 class="scene-main-title">உன் அணியை உருவாக்கு!</h2>
+            <p class="scene-subtitle">4 நல்ல குணங்களைத் தேர்ந்தெடு!</p>
+          </div>
+
+          <div class="team-building-layout">
+            <div class="qualities-pool" id="qualities-pool">
+              <button class="quality-chip" data-good="true" data-name="துணிவு">🦁 துணிவு</button>
+              <button class="quality-chip" data-good="false" data-name="சோம்பல்">😴 சோம்பல்</button>
+              <button class="quality-chip" data-good="true" data-name="ஒற்றுமை">🤝 ஒற்றுமை</button>
+              <button class="quality-chip" data-good="false" data-name="பயம்">😱 பயம்</button>
+              <button class="quality-chip" data-good="true" data-name="நம்பிக்கை">✨ நம்பிக்கை</button>
+              <button class="quality-chip" data-good="false" data-name="பொறாமை">😠 பொறாமை</button>
+              <button class="quality-chip" data-good="true" data-name="உதவி">🛡️ உதவி</button>
+              <button class="quality-chip" data-good="false" data-name="துரோகம்">🗡️ துரோகம்</button>
+            </div>
+
+            <div class="army-formation-area">
+              <h3 class="formation-title">🛡️ படை அணிவகுப்பு:</h3>
+              <div class="formation-slots">
+                <div class="slot-box" id="slot-1">1</div>
+                <div class="slot-box" id="slot-2">2</div>
+                <div class="slot-box" id="slot-3">3</div>
+                <div class="slot-box" id="slot-4">4</div>
+              </div>
+              <div class="formation-warriors-row" id="formation-warriors-visual"></div>
+            </div>
+          </div>
+
+          <div class="feedback-modal hidden" id="challenge2-feedback">
+            <div class="feedback-icon">⚔️</div>
+            <h3 class="feedback-title">வெற்றி படை தயார்!</h3>
+            <p class="feedback-desc">துணிவு, ஒற்றுமை, நம்பிக்கை, உதவி ஆகியவை உன்னை வெல்ல முடியாத வீரன் ஆக்கும்!</p>
+            <button class="game-btn glow-gold mt-4" id="goto-chap11-btn">
+              ➡️ நிஜ வாழ்க்கைச் சோதனைக்குச் செல்
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 11: FINAL BOSS BATTLE (10S TIMER) -->
+      <section class="story-scene-section" id="stage-11" data-bg="battlefield">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="boss-arena-box">
+            <div class="boss-header">
+              <span class="boss-badge">🔥 இறுதி சோதனை — பய அரக்கன் 🔥</span>
+              <div class="boss-timer-wrap">
+                ⏳ <span class="timer-countdown" id="boss-timer">10</span> விநாடிகள்
+              </div>
+            </div>
+
+            <div class="boss-silhouette boss-pulsing-anim">
+              <div class="boss-eye left"></div>
+              <div class="boss-eye right"></div>
+              <span class="boss-name-tag">😱 பயம்</span>
+            </div>
+
+            <h2 class="boss-question">ஒரு வலிமையான படைக்கு என்ன வேண்டும்?</h2>
+
+            <div class="boss-options-grid" id="boss-options-grid">
+              <button class="boss-opt-btn" data-correct="true">🦁 துணிவு</button>
+              <button class="boss-opt-btn" data-correct="false">😱 பயம்</button>
+              <button class="boss-opt-btn" data-correct="true">🤝 ஒற்றுமை</button>
+              <button class="boss-opt-btn" data-correct="false">😴 சோம்பல்</button>
+              <button class="boss-opt-btn" data-correct="true">✨ நம்பிக்கை</button>
+              <button class="boss-opt-btn" data-correct="false">🗡️ துரோகம்</button>
+              <button class="boss-opt-btn" data-correct="true">🛡️ தளராமை</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 12: VICTORY & WISDOM (SUNRISE TRANSFORMATION) -->
+      <section class="story-scene-section" id="stage-12" data-bg="sunrise">
+        <div class="scene-environment-layer">
+          <div class="bg-env-image"></div>
+        </div>
+
+        <div class="scene-content-overlay">
+          <div class="victory-container-box">
+            <div class="victory-badge">🏆 ஞான வெற்றி!</div>
+            <h1 class="victory-title">நீ குறளின் பொருளைக் கண்டுபிடித்துவிட்டாய்!</h1>
+
+            <div class="character-visual-container warrior-victory-pose">
+              <p class="pose-label-text">🌅 "அறிவே வெற்றி!"</p>
+            </div>
+
+            <div class="score-summary-card">
+              <div class="total-score-box">
+                <span class="score-big-val" id="final-score-val">850</span>
+                <span class="score-unit">வீரப் புள்ளிகள்</span>
+              </div>
+
+              <div class="rank-badge-box">
+                <span class="rank-label">உன் பதவி:</span>
+                <span class="rank-title" id="final-rank-title">ஞான வீரன்</span>
+              </div>
+            </div>
+
+            <div class="final-explanation-card">
+              <h3 class="expl-card-title">📜 இந்தக் குறள் என்ன சொல்கிறது?</h3>
+              <ul class="expl-list">
+                <li>🛡️ <strong>ஒரு நல்ல படை எளிதில் அழியாது.</strong></li>
+                <li>⚔️ <strong>துன்பம் வந்தால் பயந்து ஓடாது.</strong></li>
+                <li>🤝 <strong>எல்லோரும் ஒற்றுமையாக இருப்பார்கள்.</strong></li>
+                <li>💪 <strong>துணிவுடன் தங்கள் கடமையைச் செய்வார்கள்.</strong></li>
+              </ul>
+            </div>
+
+            <div class="victory-actions">
+              <button class="game-btn glow-gold" id="replay-game-btn">
+                🔄 மீண்டும் விளையாடு
+              </button>
+
+              <button class="secondary-btn" id="reset-progress-btn">
+                🧹 புள்ளிகளை பூஜ்ஜியமாக்கு
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
