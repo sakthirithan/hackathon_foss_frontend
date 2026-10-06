@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const scoreDisplay = document.getElementById('score-display');
   if (scoreDisplay) scoreDisplay.textContent = currentState.score;
 
-  // 2. Audio Manager with Web Audio Synthesizer Fallback
+  // 2. Audio Manager with Web Audio Synthesizer Fallback & Path Resolution
   class SoundManager {
     constructor() { this.ctx = null; }
 
@@ -46,22 +46,37 @@ document.addEventListener('DOMContentLoaded', () => {
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         if (AudioCtx) this.ctx = new AudioCtx();
       }
+      if (this.ctx && this.ctx.state === 'suspended') {
+        this.ctx.resume();
+      }
     }
 
     playSound(type) {
       if (!kuralQuest.state.soundEnabled) return;
+      this.initWebAudio();
 
-      let fileMap = {
-        clash: 'sword-hit.wav',
-        victory: 'victory.wav',
-        click: 'click.wav'
+      const soundMap = {
+        click: { file: 'click.wav', folder: 'ui' },
+        clash: { file: 'sword-hit.wav', folder: 'combat' },
+        correct: { file: 'correct.wav', folder: 'ui' },
+        wrong: { file: 'wrong.wav', folder: 'ui' },
+        victory: { file: 'victory.wav', folder: 'victory' },
+        battle: { file: 'battle.wav', folder: 'combat' },
+        ambient: { file: 'ambient-temple.wav', folder: 'ambience' }
       };
 
-      let audioFile = fileMap[type] || 'click.wav';
-      let audio = new Audio(`../../assets/audio/ui/${audioFile}`);
-      audio.volume = 0.5;
+      const soundInfo = soundMap[type] || { file: 'click.wav', folder: 'ui' };
+      const subfolderPath = `../../assets/audio/${soundInfo.folder}/${soundInfo.file}`;
+      const rootPath = `../../assets/audio/${soundInfo.file}`;
 
-      audio.play().catch(() => this.synthSound(type));
+      let audio = new Audio(subfolderPath);
+      audio.volume = type === 'click' ? 0.35 : 0.5;
+
+      audio.play().catch(() => {
+        let fallbackAudio = new Audio(rootPath);
+        fallbackAudio.volume = audio.volume;
+        fallbackAudio.play().catch(() => this.synthSound(type));
+      });
     }
 
     synthSound(type) {
@@ -70,24 +85,65 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!this.ctx) return;
 
         const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-
         if (type === 'clash') {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
           osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(320, now);
-          osc.frequency.exponentialRampToValueAtTime(80, now + 0.15);
-          gain.gain.setValueAtTime(0.6, now);
-          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
-          osc.start(now); osc.stop(now + 0.15);
+          osc.frequency.setValueAtTime(1200, now);
+          osc.frequency.exponentialRampToValueAtTime(100, now + 0.25);
+          gain.gain.setValueAtTime(0.5, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now); osc.stop(now + 0.25);
+        } else if (type === 'correct') {
+          [523.25, 659.25, 783.99].forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+            gain.gain.setValueAtTime(0.3, now + idx * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.35);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + idx * 0.08);
+            osc.stop(now + idx * 0.08 + 0.35);
+          });
+        } else if (type === 'wrong') {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(160, now);
+          osc.frequency.linearRampToValueAtTime(100, now + 0.3);
+          gain.gain.setValueAtTime(0.4, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now); osc.stop(now + 0.3);
+        } else if (type === 'victory') {
+          [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + i * 0.15);
+            gain.gain.setValueAtTime(0.4, now + i * 0.15);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.15 + 0.6);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + i * 0.15);
+            osc.stop(now + i * 0.15 + 0.6);
+          });
         } else {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
           osc.type = 'sine';
-          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.setValueAtTime(600, now);
+          osc.frequency.exponentialRampToValueAtTime(300, now + 0.08);
           gain.gain.setValueAtTime(0.3, now);
-          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-          osc.start(now); osc.stop(now + 0.1);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now); osc.stop(now + 0.08);
         }
       } catch (e) {}
     }

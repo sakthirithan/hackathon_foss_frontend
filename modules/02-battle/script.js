@@ -40,14 +40,27 @@ document.addEventListener('DOMContentLoaded', () => {
   function playSound(type) {
     if (!currentState.soundEnabled) return;
     try {
-      let fileName = 'sword-hit.wav';
-      if (type === 'click') fileName = 'click.wav';
-      if (type === 'correct') fileName = 'correct.wav';
-      if (type === 'victory') fileName = 'victory.wav';
+      const soundMap = {
+        click: { file: 'click.wav', folder: 'ui' },
+        clash: { file: 'sword-hit.wav', folder: 'combat' },
+        attack: { file: 'sword-hit.wav', folder: 'combat' },
+        correct: { file: 'correct.wav', folder: 'ui' },
+        wrong: { file: 'wrong.wav', folder: 'ui' },
+        victory: { file: 'victory.wav', folder: 'victory' },
+        heartbeat: { file: 'sword-hit.wav', folder: 'combat' }
+      };
 
-      const audio = new Audio(`../../assets/audio/combat/${fileName}`);
+      const soundInfo = soundMap[type] || { file: 'click.wav', folder: 'ui' };
+      const subfolderPath = `../../assets/audio/${soundInfo.folder}/${soundInfo.file}`;
+      const rootPath = `../../assets/audio/${soundInfo.file}`;
+
+      const audio = new Audio(subfolderPath);
       audio.volume = 0.45;
-      audio.play().catch(() => playSynthSound(type));
+      audio.play().catch(() => {
+        const fallbackAudio = new Audio(rootPath);
+        fallbackAudio.volume = 0.45;
+        fallbackAudio.play().catch(() => playSynthSound(type));
+      });
     } catch (e) {
       playSynthSound(type);
     }
