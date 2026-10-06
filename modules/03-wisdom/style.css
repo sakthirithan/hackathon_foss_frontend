@@ -37,6 +37,10 @@ body {
   overflow-x: hidden;
 }
 
+.scalex {
+  transform: scaleX(1);
+}
+
 /* --- HUD Header --- */
 .game-header {
   height: var(--header-height);

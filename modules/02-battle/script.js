@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const audio = new Audio(`../../assets/audio/combat/${fileName}`);
       audio.volume = 0.45;
       audio.play().catch(() => playSynthSound(type));
-    } catch(e) {
+    } catch (e) {
       playSynthSound(type);
     }
   }
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         osc.start();
         osc.stop(audioCtx.currentTime + 0.3);
       }
-    } catch(e) {}
+    } catch (e) { }
   }
 
   // Camera & Visual FX Helpers

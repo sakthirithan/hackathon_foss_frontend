@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ta">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,13 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;700;800;900&family=Mukta+Malar:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;700;800;900&family=Mukta+Malar:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="bg-battlefield">
 
   <!-- Ambient Particle Canvas & Light Overlay -->
@@ -74,11 +78,15 @@
             <div class="battle-health-hud">
               <div class="health-unit">
                 <span class="unit-name">🛡️ வீரன் HP</span>
-                <div class="hp-bar-track"><div class="hp-bar-fill warrior-hp" id="warrior-hp-1"></div></div>
+                <div class="hp-bar-track">
+                  <div class="hp-bar-fill warrior-hp" id="warrior-hp-1"></div>
+                </div>
               </div>
               <div class="health-unit">
                 <span class="unit-name" id="enemy-name-label">⚔️ எதிரி HP</span>
-                <div class="hp-bar-track"><div class="hp-bar-fill enemy-hp" id="enemy-hp-1"></div></div>
+                <div class="hp-bar-track">
+                  <div class="hp-bar-fill enemy-hp" id="enemy-hp-1"></div>
+                </div>
               </div>
             </div>
 
@@ -87,14 +95,16 @@
               <div class="impact-flash" id="impact-flash-1"></div>
 
               <div class="battle-unit warrior-unit" id="anim-warrior-1">
-                <img src="../../assets/images/characters/warrior_battle.png" alt="வீரன்" class="unit-sprite-img warrior-sprite">
+                <img src="../../assets/images/characters/warrior_battle.png" alt="வீரன்"
+                  class="unit-sprite-img warrior-sprite">
               </div>
               <div class="battle-clash-symbol" id="anim-clash-1">
                 <img src="../../assets/images/weapons/weapon_axe.png" alt="கோடாரி" class="weapon-clash-img">
               </div>
               <div class="battle-unit enemy-unit" id="anim-enemy-1">
                 <span class="enemy-type-badge" id="enemy-type-badge">⚔️ எளிய எதிரி</span>
-                <img src="../../assets/images/enemies/enemy_warrior.png" alt="எதிரி" class="unit-sprite-img enemy-sprite" id="enemy-sprite-1">
+                <img src="../../assets/images/enemies/enemy_warrior.png" alt="எதிரி"
+                  class="unit-sprite-img enemy-sprite" id="enemy-sprite-1">
               </div>
             </div>
           </div>
@@ -124,7 +134,8 @@
           <div class="battle-card-window">
             <div class="character-visual-container warrior-rising-pose" id="warrior-pose-box">
               <div class="hero-aura-glow" id="hero-aura-glow"></div>
-              <img src="../../assets/images/characters/warrior_side.png" alt="வீரன்" class="warrior-render-img" id="rising-warrior-img">
+              <img src="../../assets/images/characters/warrior_side.png" alt="வீரன்" class="warrior-render-img"
+                id="rising-warrior-img">
               <div class="pose-label-text" id="pose-text">💥 "அடிபட்ட வீரன் கீழே விழுந்தான்..."</div>
             </div>
           </div>
@@ -154,11 +165,15 @@
           <div class="battle-card-window">
             <div class="character-visual-container">
               <div class="courage-stand-box">
-                <img src="../../assets/images/characters/warrior_front.png" alt="வீரன்" class="warrior-render-img warrior-courage-img">
+                <img src="../../assets/images/characters/warrior_front.png" alt="வீரன்"
+                  class="warrior-render-img warrior-courage-img">
                 <div class="enemy-army-horizon">
-                  <img src="../../assets/images/enemies/enemy_warrior.png" alt="பகைவர் படை" class="horizon-enemy-silhouette e1">
-                  <img src="../../assets/images/enemies/enemy_warrior.png" alt="பகைவர் படை" class="horizon-enemy-silhouette e2">
-                  <img src="../../assets/images/enemies/enemy_warrior.png" alt="பகைவர் படை" class="horizon-enemy-silhouette e3">
+                  <img src="../../assets/images/enemies/enemy_warrior.png" alt="பகைவர் படை"
+                    class="horizon-enemy-silhouette e1">
+                  <img src="../../assets/images/enemies/enemy_warrior.png" alt="பகைவர் படை"
+                    class="horizon-enemy-silhouette e2">
+                  <img src="../../assets/images/enemies/enemy_warrior.png" alt="பகைவர் படை"
+                    class="horizon-enemy-silhouette e3">
                 </div>
               </div>
             </div>
@@ -192,11 +207,11 @@
                 <span class="unit-tag">தலைவன்</span>
               </div>
               <div class="ally-unit ally-2 hidden" id="ally-unit-2">
-                <img src="../../assets/images/characters/warrior_battle.png" alt="வீரன் 2" class="ally-img">
+                <img src="../../assets/images/characters/allies/ally-axe-idle.png" alt="வீரன் 2" class="ally-img">
                 <span class="unit-tag" id="ally-tag-2">🪓 கோடாரி தோழன்</span>
               </div>
               <div class="ally-unit ally-3 hidden" id="ally-unit-3">
-                <img src="../../assets/images/characters/warrior_side.png" alt="வீரன் 3" class="ally-img">
+                <img src="../../assets/images/characters/allies/ally-spear-idle.png" alt="வீரன் 3" class="ally-img">
                 <span class="unit-tag" id="ally-tag-3">🛡️ கேடய தோழன்</span>
               </div>
             </div>
@@ -262,27 +277,34 @@
             <div class="battle-health-hud">
               <div class="health-unit">
                 <span class="unit-name">🛡️ வீரன் + படை HP</span>
-                <div class="hp-bar-track"><div class="hp-bar-fill warrior-hp" id="boss-warrior-hp"></div></div>
+                <div class="hp-bar-track">
+                  <div class="hp-bar-fill warrior-hp" id="boss-warrior-hp"></div>
+                </div>
               </div>
               <div class="health-unit">
                 <span class="unit-name">🔥 பய அரக்கன் (Boss) HP</span>
-                <div class="hp-bar-track"><div class="hp-bar-fill enemy-hp" id="boss-enemy-hp"></div></div>
+                <div class="hp-bar-track">
+                  <div class="hp-bar-fill enemy-hp" id="boss-enemy-hp"></div>
+                </div>
               </div>
             </div>
 
             <div class="boss-arena-box" id="boss-arena-box">
               <div class="enemy-attack-warning hidden" id="boss-warning">⚠️ அரக்கன் பெரும் தாக்குதல்!</div>
               <div class="impact-flash" id="boss-impact-flash"></div>
-              
+
               <div class="boss-hero-squad" id="boss-hero-squad">
-                <img src="../../assets/images/characters/warrior_battle.png" alt="தலைவன்" class="boss-hero-img" id="boss-warrior-img">
-                <img src="../../assets/images/weapons/weapon_axe.png" alt="ஆயுதம்" class="boss-weapon-img" id="boss-weapon-img">
+                <img src="../../assets/images/characters/warrior_battle.png" alt="தலைவன்" class="boss-hero-img"
+                  id="boss-warrior-img">
+                <img src="../../assets/images/weapons/weapon_axe.png" alt="ஆயுதம்" class="boss-weapon-img"
+                  id="boss-weapon-img">
               </div>
 
               <div class="boss-clash-symbol" id="boss-clash-symbol">💥</div>
 
               <div class="boss-render-unit" id="boss-unit">
-                <img src="../../assets/images/enemies/enemy_boss.png" alt="அரக்கன்" class="boss-sprite-img" id="boss-sprite-img">
+                <img src="../../assets/images/enemies/enemy_boss.png" alt="அரக்கன்" class="boss-sprite-img"
+                  id="boss-sprite-img">
               </div>
             </div>
           </div>
@@ -295,7 +317,8 @@
             <button class="game-btn glow-red" id="cmd-boss-attack">⚔️ கூட்டுத் தாக்குதல்!</button>
             <button class="game-btn glow-gold" id="cmd-boss-block">🛡️ தடுப்பு!</button>
             <button class="game-btn glow-orange hidden" id="cmd-boss-rise">🔥 எழுந்து தாக்கு!</button>
-            <button class="game-btn glow-gold hidden" id="goto-wisdom-module-btn">✨ ஞான சோதனைகளுக்குச் செல் (அடுத்த அத்தியாயம்)</button>
+            <button class="game-btn glow-gold hidden" id="goto-wisdom-module-btn">✨ ஞான சோதனைகளுக்குச் செல் (அடுத்த
+              அத்தியாயம்)</button>
           </div>
         </div>
       </section>
@@ -305,4 +328,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>
