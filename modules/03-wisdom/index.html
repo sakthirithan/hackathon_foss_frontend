@@ -4,127 +4,280 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>குறள் வீரப் பயணம் — அத்தியாயம் 3: ஞான வெற்றி</title>
-
+  <title>குறள் வீரப் பயணம் — அத்தியாயம் 3: ஞானம்</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;700;800;900&family=Mukta+Malar:wght@400;600;700;800&display=swap"
     rel="stylesheet">
-
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="bg-sunrise">
+<body class="bg-dark">
 
   <canvas id="particle-canvas"></canvas>
-  <div class="light-overlay"></div>
+  <div class="ambient-light"></div>
 
-  <div id="app-wrapper">
-    <!-- Header HUD -->
-    <header class="game-header">
-      <div class="header-left">
-        <span class="game-logo-icon">⚔️</span>
-        <span class="game-title-sm">குறள் வீரப் பயணம் — ஞானம்</span>
+  <header class="game-header">
+    <div class="header-left">
+      <span class="game-logo-icon">⚔️</span>
+      <span class="game-title-sm">குறள் பயணம் — ஞானம்</span>
+    </div>
+    <div class="header-center">
+      <div class="stage-progress-container">
+        <div class="stage-progress-bar" id="progress-bar" style="width: 0%;"></div>
+      </div>
+      <span class="level-badge">அத்தியாயம் 03</span>
+    </div>
+    <div class="header-right">
+      <div class="score-card">
+        <span class="score-icon">🛡️</span>
+        <span class="score-value" id="score-display">0</span>
+      </div>
+      <button class="icon-btn sound-btn" id="sound-btn" aria-label="ஒலி மாற்று">
+        <span id="sound-icon">🔊</span>
+      </button>
+    </div>
+  </header>
+
+  <div id="floating-score-container"></div>
+
+  <main class="story-scroll-container">
+
+    <!-- Scene 17: அமைதி -->
+    <section id="scene-17" class="cinematic-scene scene-17" data-index="0">
+      <div class="scene-bg" style="background-image: url('../../assets/images/environments/battlefield_bg.jpg')"></div>
+      <div class="scene-overlay dark-overlay"></div>
+      <div class="smoke-layer"></div>
+
+      <div class="warriors-silhouettes">
+        <img src="../../assets/images/characters/warrior_side.png" class="warrior-standing w-side1" alt="">
+        <img src="../../assets/images/characters/warrior_back.png" class="warrior-standing w-main" alt="Warrior">
+        <img src="../../assets/images/characters/warrior_side.png" class="warrior-standing w-side2" alt="">
       </div>
 
-      <div class="header-center">
-        <div class="stage-progress-container">
-          <div class="stage-progress-bar" style="width: 100%;"></div>
-        </div>
-        <span class="level-badge">அத்தியாயம் 03</span>
+      <div class="text-sequence-container">
+        <h2 class="cinematic-text text-1">போர் முடிந்தது.</h2>
+        <h2 class="cinematic-text text-2">இப்போது... குறளின் உண்மையைப் பார்ப்போம்.</h2>
       </div>
 
-      <div class="header-right">
-        <div class="score-card">
-          <span class="score-icon">🛡️</span>
-          <span class="score-value" id="score-display">0</span>
-        </div>
-
-        <button class="icon-btn sound-btn" id="sound-btn" aria-label="ஒலி மாற்று">
-          <span id="sound-icon">🔊</span>
-        </button>
+      <div class="scroll-indicator">
+        <span>கீழே செல்லவும்</span>
+        <div class="arrow-down">↓</div>
       </div>
-    </header>
+    </section>
 
-    <div id="floating-score-container"></div>
+    <!-- Scene 18-1: அழிவின்றி -->
+    <section id="scene-18-1" class="cinematic-scene scene-18-1" data-index="1">
+      <div class="scene-bg" style="background-image: url('../../assets/images/environments/mountain_snow_bg.jpg')">
+      </div>
+      <div class="scene-overlay vignette-overlay"></div>
 
-    <main class="story-scroll-container">
+      <div class="action-container">
+        <img src="../../assets/images/characters/warrior_side.png" class="warrior-fallen" id="anim-warrior-1"
+          alt="Fallen Warrior">
+      </div>
 
-      <!-- FINAL BOSS & WISDOM VICTORY SCENE -->
-      <section class="story-scene-section">
-        <div class="scene-environment-layer">
-          <div class="bg-env-image"></div>
+      <div class="concept-text right-align">
+        <h1 class="kural-word">அழிவின்றி</h1>
+        <h2 class="kural-meaning">விழுந்தாலும் எழு.</h2>
+      </div>
+    </section>
+
+    <!-- Scene 18-2: அறைபோகா தாகி -->
+    <section id="scene-18-2" class="cinematic-scene scene-18-2" data-index="2">
+      <div class="scene-bg" style="background-image: url('../../assets/images/environments/temple_bg.jpg')"></div>
+      <div class="scene-overlay fire-overlay"></div>
+
+      <div class="action-container parallax-container">
+        <div class="enemy-army">
+          <img src="../../assets/images/enemies/enemy_warrior.png" class="enemy-warrior-silhouette" alt="">
+          <img src="../../assets/images/enemies/enemy_boss.png" class="enemy-boss-silhouette" alt="Enemy Boss">
+          <img src="../../assets/images/enemies/enemy_warrior.png" class="enemy-warrior-silhouette"
+            style="transform: scaleX(-1)" alt="">
+        </div>
+        <img src="../../assets/images/characters/warrior_back.png" class="warrior-brave" id="anim-warrior-2"
+          alt="Brave Warrior">
+      </div>
+
+      <div class="concept-text">
+        <h1 class="kural-word">அறைபோகா தாகி</h1>
+        <h2 class="kural-meaning">பயந்து ஓடாதே.</h2>
+      </div>
+    </section>
+
+    <!-- Scene 18-3: வழிவந்த -->
+    <section id="scene-18-3" class="cinematic-scene scene-18-3" data-index="3">
+      <div class="scene-bg" style="background-image: url('../../assets/images/environments/sunrise_bg.jpg')"></div>
+      <div class="scene-overlay warm-overlay"></div>
+
+      <div class="action-container group-container">
+        <img src="../../assets/images/characters/warrior_side.png" class="warrior-ally w-left" alt="Ally">
+        <img src="../../assets/images/characters/warrior_front.png" class="warrior-ally w-center" alt="Main Warrior">
+        <img src="../../assets/images/characters/warrior_side.png" class="warrior-ally w-right" alt="Ally"
+          style="transform: scaleX(-1)">
+      </div>
+
+      <div class="concept-text right-align">
+        <h1 class="kural-word">வழிவந்த</h1>
+        <h2 class="kural-meaning">ஒன்றாகச் சேர்ந்தனர்.</h2>
+      </div>
+    </section>
+
+    <!-- Scene 18-4: வன்க ணதுவே படை -->
+    <section id="scene-18-4" class="cinematic-scene scene-18-4" data-index="4">
+      <div class="scene-bg" style="background-image: url('../../assets/images/environments/battlefield_bg.jpg')"></div>
+      <div class="scene-overlay majestic-overlay"></div>
+      <div class="smoke-layer"></div>
+
+      <div class="action-container army-container">
+        <div class="bg-army">
+          <img src="../../assets/images/characters/warrior_front.png" alt="">
+          <img src="../../assets/images/characters/warrior_front.png" alt="">
+          <img src="../../assets/images/characters/warrior_front.png" alt="">
+          <img src="../../assets/images/characters/warrior_front.png" alt="">
+        </div>
+        <div class="fg-army">
+          <img src="../../assets/images/characters/warrior_front.png" class="army-leader" alt="Leader">
+        </div>
+      </div>
+
+      <div class="concept-text">
+        <h1 class="kural-word">வன்க ணதுவே படை</h1>
+        <h2 class="kural-meaning">ஒன்றாக நின்றால் வலிமை.</h2>
+        <h3 class="kural-sub-meaning">இதுதான் படையின் வலிமை.</h3>
+      </div>
+    </section>
+
+    <!-- Scene 19: FULL KURAL REVEAL -->
+    <section id="scene-19" class="cinematic-scene scene-19" data-index="5">
+      <div class="scene-bg dark-bg"></div>
+      <div class="smoke-layer"></div>
+      <div class="faint-warrior-bg" style="background-image: url('../../assets/images/characters/warrior_back.png')">
+      </div>
+
+      <div class="full-kural-container">
+        <div class="kural-line k-line-1">
+          <span class="kw-1">அழிவின்றி</span> <span class="kw-2">அறைபோகா தாகி</span>
+        </div>
+        <div class="kural-line k-line-2">
+          <span class="kw-3">வழிவந்த</span> <span class="kw-4">வன்க ணதுவே படை.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scene 20: நிஜ வாழ்க்கை -->
+    <section id="scene-20" class="cinematic-scene scene-20" data-index="6">
+      <div class="scene-bg white-transition-bg"></div>
+
+      <div class="modern-life-container">
+        <h2 class="section-title">இது போர்க்களத்திற்கு மட்டுமா?</h2>
+
+        <div class="life-examples">
+          <div class="life-card ex-1">
+            <div class="icon-ring">📚</div>
+            <h3>படிப்பு</h3>
+            <p>ஒன்றாக முயற்சி செய்.</p>
+          </div>
+          <div class="life-card ex-2">
+            <div class="icon-ring">🤝</div>
+            <h3>குழுப்பணி</h3>
+            <p>ஒன்றாக செய்.</p>
+          </div>
+          <div class="life-card ex-3">
+            <div class="icon-ring">🏆</div>
+            <h3>வெற்றி</h3>
+            <p>ஒன்றாக போராடு.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scene 21: FINAL CHALLENGE -->
+    <section id="scene-21" class="cinematic-scene scene-21 interactive-scene" data-index="7">
+      <div class="scene-bg" style="background-image: url('../../assets/images/environments/temple_bg.jpg')"></div>
+      <div class="scene-overlay dark-overlay"></div>
+
+      <div class="challenge-arena">
+        <div class="challenge-visual">
+          <img src="../../assets/images/characters/warrior_side.png" class="friend-fallen" id="challenge-friend"
+            alt="Fallen Friend">
+          <img src="../../assets/images/characters/warrior_back.png" class="player-character" id="challenge-player"
+            alt="Player">
         </div>
 
-        <div class="scene-content-overlay">
+        <div class="challenge-ui">
+          <h2 class="challenge-q">உன் நண்பன் தோற்றுவிட்டான்.</h2>
+          <h3 class="challenge-sub">நீ என்ன செய்வாய்?</h3>
 
-          <!-- Boss Challenge (Before Victory) -->
-          <div class="boss-arena-box" id="boss-box">
-            <div class="boss-header">
-              <span class="boss-badge">🔥 இறுதி சோதனை — பய அரக்கன் 🔥</span>
-              <div class="boss-timer-wrap">
-                ⏳ <span class="timer-countdown" id="boss-timer">10</span> விநாடிகள்
-              </div>
-            </div>
-
-            <div class="boss-silhouette">
-              <img src="../../assets/images/enemies/enemy_boss.png" alt="அரக்கன்" class="enemy-boss-img">
-              <span class="boss-name-tag">🔥 பய அரக்கன் (Boss)</span>
-            </div>
-
-            <h2 class="boss-question">ஒரு வலிமையான படைக்கு என்ன வேண்டும்?</h2>
-
-            <div class="boss-options-grid" id="boss-options-grid">
-              <button class="boss-opt-btn" data-correct="true">🦁 துணிவு</button>
-              <button class="boss-opt-btn" data-correct="false">😱 பயம்</button>
-              <button class="boss-opt-btn" data-correct="true">🤝 ஒற்றுமை</button>
-              <button class="boss-opt-btn" data-correct="false">😴 சோம்பல்</button>
-              <button class="boss-opt-btn" data-correct="true">✨ நம்பிக்கை</button>
-              <button class="boss-opt-btn" data-correct="false">🗡️ துரோகம்</button>
-              <button class="boss-opt-btn" data-correct="true">🛡️ தளராமை</button>
-            </div>
+          <div class="options-grid" id="challenge-options">
+            <button class="choice-btn" data-correct="false">விட்டுவிடுவேன்</button>
+            <button class="choice-btn" data-correct="false">தனியாகச் செய்வேன்</button>
+            <button class="choice-btn" id="correct-btn" data-correct="true">அவனை எழுப்பி சேர்ந்து செய்வேன்</button>
+            <button class="choice-btn" data-correct="false">ஓடிவிடுவேன்</button>
           </div>
 
-          <!-- Victory Card (After Boss Defeat) -->
-          <div class="victory-container-box hidden" id="victory-box">
-            <div class="victory-badge">🏆 ஞான வெற்றி!</div>
-            <h1 class="victory-title">நீ குறளின் பொருளைக் கண்டுபிடித்துவிட்டாய்!</h1>
-
-            <div class="score-summary-card">
-              <div class="total-score-box">
-                <span class="score-big-val" id="final-score-val">850</span>
-                <span class="score-unit">வீரப் புள்ளிகள்</span>
-              </div>
-
-              <div class="rank-badge-box">
-                <span class="rank-label">உன் பதவி:</span>
-                <span class="rank-title" id="final-rank-title">ஞான வீரன்</span>
-              </div>
-            </div>
-
-            <div class="final-explanation-card">
-              <h3 class="expl-card-title">📜 இந்தக் குறள் என்ன சொல்கிறது?</h3>
-              <ul class="expl-list">
-                <li>🛡️ <strong>ஒரு நல்ல படை எளிதில் அழியாது.</strong></li>
-                <li>⚔️ <strong>துன்பம் வந்தால் பயந்து ஓடாது.</strong></li>
-                <li>🤝 <strong>எல்லோரும் ஒற்றுமையாக இருப்பார்கள்.</strong></li>
-                <li>💪 <strong>துணிவுடன் தங்கள் கடமையைச் செய்வார்கள்.</strong></li>
-              </ul>
-            </div>
-
-            <div class="victory-actions">
-              <button class="game-btn glow-gold" id="replay-game-btn">
-                🔄 மீண்டும் விளையாடு (முதல் அத்தியாயம்)
-              </button>
-            </div>
-          </div>
-
+          <div class="feedback-msg" id="challenge-feedback"></div>
         </div>
-      </section>
+      </div>
+    </section>
 
-    </main>
-  </div>
+    <!-- Scene 22: VICTORY -->
+    <section id="scene-22" class="cinematic-scene scene-22 hidden" data-index="8">
+      <div class="scene-bg" style="background-image: url('../../assets/images/environments/sunrise_bg.jpg')"></div>
+      <div class="scene-overlay golden-overlay"></div>
+      <div class="smoke-layer"></div>
+
+      <div class="action-container" style="flex-direction: column;">
+        <div class="victory-characters">
+          <img src="../../assets/images/characters/warrior_side.png" class="vic-ally-1" alt="Ally">
+          <img src="../../assets/images/characters/warrior_front.png" class="vic-main" alt="Main">
+          <img src="../../assets/images/characters/warrior_side.png" class="vic-ally-2" alt="Ally">
+        </div>
+
+        <div class="victory-messages">
+          <h2 class="vm vm-1">வெற்றி என்பது</h2>
+          <h2 class="vm vm-2">எதிரியை வீழ்த்துவது மட்டும் அல்ல.</h2>
+          <h2 class="vm vm-3">வீழ்ந்தாலும் எழுவது.</h2>
+          <h2 class="vm vm-4">பின்வாங்காமல் நிற்பது.</h2>
+          <h2 class="vm vm-5">ஒன்றாக நிற்பது.</h2>
+          <h1 class="vm vm-6">அதுவே உண்மையான வலிமை.</h1>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scene 23: FINAL KURAL -->
+    <section id="scene-23" class="cinematic-scene scene-23 hidden" data-index="9">
+      <div class="scene-bg dark-bg-particles"></div>
+      <div class="ambient-light"></div>
+
+      <div class="final-card">
+        <div class="final-kural-block">
+          <p>அழிவின்றி அறைபோகா தாகி</p>
+          <p>வழிவந்த வன்க ணதுவே படை.</p>
+        </div>
+
+        <div class="final-meaning-block">
+          <p>விழுந்தாலும் எழு.</p>
+          <p>பயந்தாலும் பின்வாங்காதே.</p>
+          <p>ஒன்றாக நில்.</p>
+        </div>
+
+        <div class="final-reward">
+          <h2 class="reward-title">🏆 பயணம் முடிந்தது</h2>
+          <div class="final-score-box">
+            <span id="final-score-display">0</span> வீரப் புள்ளிகள்
+          </div>
+        </div>
+
+        <div class="final-actions">
+          <button class="game-btn" id="btn-restart">⚔️ பயணத்தைத் தொடங்கு</button>
+          <button class="game-btn outline" id="btn-review">📜 குறளை மீண்டும் பார்க்க</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
 
   <script src="script.js"></script>
 </body>

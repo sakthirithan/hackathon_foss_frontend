@@ -20,115 +20,90 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const currentState = kuralQuest.state;
-  document.getElementById('score-display').textContent = currentState.score;
+  let currentState = kuralQuest.state;
+  const scoreDisplay = document.getElementById('score-display');
+  const soundBtn = document.getElementById('sound-btn');
+  const soundIcon = document.getElementById('sound-icon');
+
+  scoreDisplay.textContent = currentState.score;
 
   function playSound(type) {
     if (!currentState.soundEnabled) return;
-    let fileName = type === 'victory' ? 'victory.wav' : (type === 'clash' ? 'sword-hit.wav' : 'click.wav');
-    const audio = new Audio(`../../assets/audio/victory/${fileName}`);
-    audio.volume = 0.4;
+    let fileName = 'click.wav';
+    let folder = 'ui';
+    if (type === 'victory') { fileName = 'victory.wav'; folder = 'victory'; }
+    if (type === 'correct') { fileName = 'correct.wav'; folder = 'ui'; }
+    if (type === 'wrong') { fileName = 'wrong.wav'; folder = 'ui'; }
+
+    const audio = new Audio(`../../assets/audio/${folder}/${fileName}`);
+    audio.volume = 0.5;
     audio.play().catch(() => { });
   }
 
+  soundBtn.addEventListener('click', () => {
+    currentState.soundEnabled = !currentState.soundEnabled;
+    soundIcon.textContent = currentState.soundEnabled ? '🔊' : '🔇';
+    kuralQuest.saveState({ soundEnabled: currentState.soundEnabled });
+  });
+
   function updateScore(amount) {
     currentState.score += amount;
-    document.getElementById('score-display').textContent = currentState.score;
+    scoreDisplay.textContent = currentState.score;
+    kuralQuest.saveState({ score: currentState.score });
 
     const floatEl = document.createElement('div');
     floatEl.className = 'floating-score-item';
     floatEl.textContent = `+${amount}`;
     document.getElementById('floating-score-container').appendChild(floatEl);
     setTimeout(() => floatEl.remove(), 1200);
-
-    kuralQuest.saveState({ score: currentState.score });
   }
 
-  // Boss Trial Timer & Options
-  const bossTimer = document.getElementById('boss-timer');
-  const bossOptBtns = document.querySelectorAll('.boss-opt-btn');
-  const bossBox = document.getElementById('boss-box');
-  const victoryBox = document.getElementById('victory-box');
-  const finalScoreVal = document.getElementById('final-score-val');
-  const finalRankTitle = document.getElementById('final-rank-title');
+  // --- Scroll & Intersection Observer ---
+  const scenes = document.querySelectorAll('.cinematic-scene');
+  const progressBar = document.getElementById('progress-bar');
 
-  let bossHits = 0;
-  let timeLeft = 10;
-  let timerInterval = null;
+  const sceneObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
 
-  function startBossTimer() {
-    timerInterval = setInterval(() => {
-      timeLeft--;
-      bossTimer.textContent = timeLeft;
-      if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-        timeLeft = 10;
-        bossTimer.textContent = '10';
-        startBossTimer();
-      }
-    }, 1000);
-  }
-
-  startBossTimer();
-
-  bossOptBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const isCorrect = btn.getAttribute('data-correct') === 'true';
-      if (isCorrect && !btn.classList.contains('hit-good')) {
-        btn.classList.add('hit-good');
-        playSound('clash');
-        bossHits++;
-
-        if (bossHits === 4) {
-          clearInterval(timerInterval);
-          updateScore(300);
-          playSound('victory');
-          bossBox.classList.add('hidden');
-          victoryBox.classList.remove('hidden');
-
-          finalScoreVal.textContent = currentState.score;
-          let rank = 'புதிய வீரன்';
-          if (currentState.score >= 900) rank = 'ஞான வீரன்';
-          else if (currentState.score >= 750) rank = 'குறள் காவலன்';
-          else if (currentState.score >= 550) rank = 'தலைவன்';
-          else if (currentState.score >= 300) rank = 'வீரன்';
-          finalRankTitle.textContent = rank;
-        }
-      } else if (!isCorrect) {
-        btn.classList.add('hit-bad');
-        playSound('wrong');
-        setTimeout(() => btn.classList.remove('hit-bad'), 400);
+        // Update Progress Bar based on scene index
+        const index = parseInt(entry.target.getAttribute('data-index') || '0');
+        const totalScenes = scenes.length;
+        const progress = ((index + 1) / totalScenes) * 100;
+        progressBar.style.width = `${progress}%`;
       }
     });
-  });
+  }, { threshold: 0.35 });
 
-  document.getElementById('replay-game-btn').addEventListener('click', () => {
-    playSound('click');
-    kuralQuest.saveState({ currentModule: 'journey', currentStage: 1, score: 0 });
-    window.location.href = '../01-journey/index.html';
-  });
+  scenes.forEach(scene => sceneObserver.observe(scene));
 
-  // Particle Engine
+  // --- Particle Engine ---
   const canvas = document.getElementById('particle-canvas');
   const ctx = canvas.getContext('2d');
   let width = canvas.width = window.innerWidth;
   let height = canvas.height = window.innerHeight;
+
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
 
   class Particle {
     constructor() { this.reset(); }
     reset() {
       this.x = Math.random() * width;
       this.y = Math.random() * height + height;
-      this.size = Math.random() * 3.5 + 1;
-      this.speedY = Math.random() * 1.5 + 0.5;
-      this.speedX = (Math.random() - 0.5) * 0.8;
-      this.opacity = Math.random() * 0.8 + 0.2;
+      this.size = Math.random() * 2 + 0.5;
+      this.speedY = Math.random() * 1 + 0.2;
+      this.speedX = (Math.random() - 0.5) * 0.5;
+      this.opacity = Math.random() * 0.5 + 0.1;
       this.color = '#F1D7A0';
     }
     update() {
       this.y -= this.speedY;
       this.x += this.speedX;
-      this.opacity -= 0.002;
+      this.opacity -= 0.001;
       if (this.y < -10 || this.opacity <= 0) this.reset();
     }
     draw() {
@@ -142,11 +117,74 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  const particles = Array.from({ length: 40 }, () => new Particle());
-  function animate() {
-    ctx.clearRect(0, 0, width, height);
-    particles.forEach(p => { p.update(); p.draw(); });
-    requestAnimationFrame(animate);
+  const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!isReducedMotion) {
+    const particles = Array.from({ length: 30 }, () => new Particle());
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animate);
+    }
+    animate();
   }
-  animate();
+
+  // --- Scene 21 Challenge Logic ---
+  const choiceBtns = document.querySelectorAll('.choice-btn');
+  const feedbackMsg = document.getElementById('challenge-feedback');
+  const friendImg = document.getElementById('challenge-friend');
+  const scene22 = document.getElementById('scene-22');
+  const scene23 = document.getElementById('scene-23');
+  const finalScoreDisplay = document.getElementById('final-score-display');
+
+  let challengeCompleted = false;
+
+  choiceBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (challengeCompleted) return;
+
+      const isCorrect = btn.getAttribute('data-correct') === 'true';
+
+      if (isCorrect) {
+        playSound('correct');
+        btn.classList.add('correct');
+        feedbackMsg.textContent = "சரியான முடிவு! ஒன்றாக நில்.";
+        feedbackMsg.className = 'feedback-msg feedback-success';
+        challengeCompleted = true;
+
+        friendImg.classList.add('rescued');
+        updateScore(100);
+
+        setTimeout(() => {
+          playSound('victory');
+          scene22.classList.remove('hidden');
+          scene23.classList.remove('hidden');
+          scene22.scrollIntoView({ behavior: 'smooth' });
+          finalScoreDisplay.textContent = currentState.score;
+        }, 2000);
+
+      } else {
+        playSound('wrong');
+        btn.classList.add('wrong');
+        feedbackMsg.textContent = "மீண்டும் சிந்தி.";
+        feedbackMsg.className = 'feedback-msg feedback-error';
+        setTimeout(() => {
+          btn.classList.remove('wrong');
+          feedbackMsg.textContent = "";
+        }, 1500);
+      }
+    });
+  });
+
+  // --- Final Actions ---
+  document.getElementById('btn-restart').addEventListener('click', () => {
+    playSound('click');
+    kuralQuest.saveState({ currentModule: 'journey', currentStage: 1, score: 0 });
+    window.location.href = '../01-journey/index.html'; // Assuming this is how restart works
+  });
+
+  document.getElementById('btn-review').addEventListener('click', () => {
+    playSound('click');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
 });
