@@ -13,11 +13,12 @@
 </head>
 <body class="bg-dark-world">
 
-  <!-- Canvas for Fire Embers & Particle Fog -->
+  <!-- Canvas for Fire Embers, Smoke & Dust Particles -->
   <canvas id="particle-canvas" aria-hidden="true"></canvas>
 
-  <!-- Ambient Light Vignette & Overlay -->
+  <!-- Atmospheric Vignette & Lighting Sweep Layer -->
   <div class="cinematic-vignette" id="vignette-overlay"></div>
+  <div class="lighting-sweep-overlay" id="light-sweep"></div>
 
   <div id="app-wrapper">
 
@@ -47,13 +48,16 @@
       </div>
     </header>
 
-    <!-- MAIN SCENE CONTAINER -->
+    <!-- MAIN SCENE VIEWPORT -->
     <main class="viewport-stage" id="viewport-stage">
 
-      <!-- SCENE 01: WORLD AWAKENING -->
+      <!-- ===================================================================
+           SCENE 01: WORLD AWAKENING (உலக விழிப்பு)
+           =================================================================== -->
       <section class="game-scene active-scene" id="scene-01" aria-label="உலக விழிப்பு">
         <div class="parallax-bg-layer bg-temple-img" id="scene1-bg"></div>
         <div class="parallax-mid-layer smoke-mist-layer"></div>
+        <div class="parallax-fore-layer ember-drift-layer"></div>
 
         <div class="scene-cinematic-content">
           <div class="kural-header-badge">
@@ -61,11 +65,11 @@
             <h1 class="kural-main-heading">அழிவின்றி அறைபோகா தாகி<br>வழிவந்த வன்க ணதுவே படை.</h1>
           </div>
 
-          <div class="stage-hero-container zoom-in-hero">
+          <div class="stage-hero-container silhouette-mode" id="scene1-hero-container">
             <div class="hero-aura-glow"></div>
             <img src="../../assets/images/characters/warrior_front.png" 
                  alt="வீரன்" 
-                 class="warrior-render-img" 
+                 class="warrior-render-img distant-silhouette" 
                  id="scene1-warrior-img"
                  onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 300\'><path d=\'M100 20 L130 80 L160 120 L150 280 L50 280 L40 120 L70 80 Z\' fill=\'%23D77A27\' opacity=\'0.8\'/><circle cx=\'100\' cy=\'50\' r=\'25\' fill=\'%23F1D7A0\'/><rect x=\'85\' y=\'100\' width=\'30\' height=\'150\' fill=\'%23B84320\'/></svg>';">
           </div>
@@ -83,23 +87,25 @@
         </div>
       </section>
 
-      <!-- SCENE 02: SOLITUDE (தனியாக) -->
+      <!-- ===================================================================
+           SCENE 02: THE LONE JOURNEY (தனியாக)
+           =================================================================== -->
       <section class="game-scene hidden-scene" id="scene-02" aria-label="தனியாக">
         <div class="parallax-bg-layer bg-mountain-img" id="scene2-bg"></div>
         <div class="parallax-mid-layer fog-moving-layer"></div>
 
         <div class="scene-cinematic-content">
-          <div class="stage-hero-container walk-hero-pose">
+          <div class="stage-hero-container walk-hero-pose" id="scene2-hero-box">
             <img src="../../assets/images/characters/warrior_side.png" 
                  alt="நடக்கும் வீரன்" 
-                 class="warrior-render-img" 
+                 class="warrior-render-img walking-animation" 
                  id="scene2-warrior-img"
                  onerror="this.onerror=null; this.src='../../assets/images/characters/warrior_front.png';">
           </div>
 
           <div class="cinematic-dialogue-card">
             <h2 class="scene-heading-title">தனியாகப் பயணம் தொடங்குகிறது.</h2>
-            <p class="subtitle-desc">எதிர்காலச் சவால்களை நோக்கி வீரன் மலையிடுக்கில் முன்னேறுகிறான்...</p>
+            <p class="subtitle-desc" id="scene2-sub-text">முன்னால் என்ன?</p>
           </div>
 
           <div class="scene-interactive-actions">
@@ -110,7 +116,9 @@
         </div>
       </section>
 
-      <!-- SCENE 03: FIRST CHALLENGE (முதல் சவால்) -->
+      <!-- ===================================================================
+           SCENE 03: THE FIRST CHALLENGE (முதல் சவால்)
+           =================================================================== -->
       <section class="game-scene hidden-scene" id="scene-03" aria-label="முதல் சவால்">
         <div class="parallax-bg-layer bg-battlefield-img" id="scene3-bg"></div>
         <div class="parallax-mid-layer fire-smoke-layer"></div>
@@ -129,17 +137,17 @@
             <div class="enemy-combat-box" id="scene3-enemy-box">
               <img src="../../assets/images/enemies/enemy_warrior.png" 
                    alt="எதிரி வீரன்" 
-                   class="enemy-render-img"
+                   class="enemy-render-img emerge-enemy"
                    onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 300\'><path d=\'M100 30 L140 90 L160 280 L40 280 L60 90 Z\' fill=\'%23B84320\'/><circle cx=\'100\' cy=\'55\' r=\'25\' fill=\'%235A3A25\'/></svg>';">
             </div>
           </div>
 
           <div class="cinematic-dialogue-card">
-            <h2 class="scene-heading-title">முதல் சவால்.</h2>
-            <p class="subtitle-desc" id="scene3-sub-text">முன்னால் எதிரி நிற்கிறான். பின்வாங்குவாயா?</p>
+            <h2 class="scene-heading-title" id="scene3-heading">முதல் சவால்.</h2>
+            <p class="subtitle-desc" id="scene3-sub-text">பின்வாங்குவாயா?</p>
           </div>
 
-          <div class="scene-interactive-actions dual-choice">
+          <div class="scene-interactive-actions dual-choice" id="scene3-actions">
             <button class="action-game-btn glow-red" id="btn-scene3-fight">
               ⚔️ முன்னேறு
             </button>
@@ -147,10 +155,19 @@
               ↩️ பின்வாங்கு
             </button>
           </div>
+
+          <!-- RETREAT RETRY BAR (Hidden initially) -->
+          <div class="scene-interactive-actions hidden" id="scene3-retry-actions">
+            <button class="action-game-btn glow-ember pulse-btn" id="btn-scene3-retry">
+              ⚔️ மீண்டும் முயற்சி செய் (முன்னேறு)
+            </button>
+          </div>
         </div>
       </section>
 
-      <!-- SCENE 04: FIRST COMBAT SETUP (போர் தொடக்கம்) -->
+      <!-- ===================================================================
+           SCENE 04: THE FIRST COMBAT (முதல் சமர் & handoff)
+           =================================================================== -->
       <section class="game-scene hidden-scene" id="scene-04" aria-label="போர் தொடக்கம்">
         <div class="parallax-bg-layer bg-battlefield-img" id="scene4-bg"></div>
         <div class="impact-flash-layer" id="impact-flash"></div>
@@ -163,13 +180,13 @@
           </div>
 
           <div class="cinematic-dialogue-card">
-            <h2 class="scene-heading-title gold-glow-title" id="scene4-status-title">போர் தொடங்கியது!</h2>
-            <p class="subtitle-desc">அடுத்த அத்தியாயத்தில் பெரும் போர் காத்துள்ளது!</p>
+            <h2 class="scene-heading-title gold-glow-title" id="scene4-status-title">போர் இப்போதுதான் தொடங்குகிறது.</h2>
+            <p class="subtitle-desc" id="scene4-status-sub">தயாரா?</p>
           </div>
 
           <div class="scene-interactive-actions">
             <button class="action-game-btn glow-ember pulse-btn" id="btn-scene4-enter-battle">
-              ⚔️ போர்க்களத்திற்குச் செல் (அத்தியாயம் 02)
+              🔥 போர்க்களத்திற்குள் செல் (அத்தியாயம் 02)
             </button>
           </div>
         </div>

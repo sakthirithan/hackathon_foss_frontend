@@ -1,6 +1,6 @@
 /* ==========================================================================
-   MODULE 01 — JOURNEY STYLES
-   Design System: Dark Ancient Mythological AAA Game Atmosphere
+   MODULE 01 — JOURNEY REDESIGN & AAA CINEMATIC STYLES
+   Visual Direction: Original Ancient Mythological AAA Game Atmosphere
    ========================================================================== */
 
 :root {
@@ -57,7 +57,18 @@ html, body {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.85) 100%);
+  background: radial-gradient(circle at center, transparent 35%, rgba(0,0,0,0.88) 100%);
+  z-index: 3;
+}
+
+.lighting-sweep-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(215,122,39,0.08) 0%, transparent 60%);
   z-index: 3;
 }
 
@@ -70,7 +81,7 @@ html, body {
   z-index: 4;
 }
 
-/* HUD Header */
+/* HUD Header Bar */
 .game-hud-header {
   display: flex;
   align-items: center;
@@ -84,28 +95,11 @@ html, body {
   z-index: 10;
 }
 
-.hud-left {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+.hud-left { display: flex; align-items: center; gap: 0.5rem; }
+.hud-icon { font-size: 1.4rem; }
+.hud-title { font-size: 1.1rem; font-weight: 700; color: var(--gold-bright); letter-spacing: 0.5px; }
 
-.hud-icon {
-  font-size: 1.4rem;
-}
-
-.hud-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--gold-bright);
-  letter-spacing: 0.5px;
-}
-
-.hud-center {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
+.hud-center { display: flex; align-items: center; gap: 1rem; }
 
 .progress-track {
   width: 140px;
@@ -131,11 +125,7 @@ html, body {
   border-radius: 4px;
 }
 
-.hud-right {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
+.hud-right { display: flex; align-items: center; gap: 1rem; }
 
 .score-pill {
   display: flex;
@@ -201,6 +191,7 @@ html, body {
   visibility: visible;
 }
 
+/* 2.5D Parallax Layers */
 .parallax-bg-layer {
   position: absolute;
   top: 0;
@@ -234,12 +225,22 @@ html, body {
   animation: pulseMist 6s ease-in-out infinite alternate;
 }
 
+.fog-moving-layer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+  animation: moveFog 15s linear infinite;
+}
+
 @keyframes pulseMist {
   0% { opacity: 0.3; transform: scale(1); }
   100% { opacity: 0.7; transform: scale(1.08); }
 }
 
-/* Scene Cinematic Overlay Content */
+@keyframes moveFog {
+  0% { transform: translateX(-20%); }
+  100% { transform: translateX(20%); }
+}
+
+/* Scene Cinematic Content Overlay */
 .scene-cinematic-content {
   position: relative;
   z-index: 5;
@@ -276,7 +277,7 @@ html, body {
   color: var(--gold-bright);
 }
 
-/* Character Containers */
+/* Hero Stage Containers */
 .stage-hero-container {
   position: relative;
   width: 220px;
@@ -284,6 +285,11 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 600ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.distant-silhouette {
+  filter: brightness(0.2) contrast(1.5) drop-shadow(0 0 15px rgba(215,122,39,0.3));
 }
 
 .hero-aura-glow {
@@ -306,6 +312,15 @@ html, body {
   object-fit: contain;
   filter: drop-shadow(0 10px 20px rgba(0,0,0,0.9));
   transition: transform 400ms cubic-bezier(0.25, 1, 0.5, 1), opacity 400ms ease;
+}
+
+.walking-animation {
+  animation: gentleBob 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes gentleBob {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
 }
 
 .combat-duo-container {
@@ -332,7 +347,7 @@ html, body {
   animation: spinVs 4s linear infinite;
 }
 
-/* Cinematic Dialogue Cards */
+/* Dialogue Cards */
 .cinematic-dialogue-card {
   background: rgba(17,17,17,0.9);
   border: 1px solid var(--stone-border);
@@ -350,9 +365,7 @@ html, body {
   margin-bottom: 0.4rem;
 }
 
-.gold-text {
-  color: var(--gold-bright);
-}
+.gold-text { color: var(--gold-bright); }
 
 .scene-heading-title {
   font-family: var(--font-heading);
@@ -361,12 +374,16 @@ html, body {
   margin-bottom: 0.4rem;
 }
 
+.gold-glow-title {
+  text-shadow: 0 0 12px var(--orange-ember);
+}
+
 .subtitle-desc {
   font-size: 1.05rem;
   color: var(--text-muted);
 }
 
-/* Buttons System - FLICKER FREE GUARANTEE */
+/* FLICKER-FREE BUTTON SYSTEM */
 .scene-interactive-actions {
   display: flex;
   gap: 1.2rem;
@@ -435,7 +452,7 @@ html, body {
   100% { box-shadow: 0 0 25px rgba(215,122,39,0.8); }
 }
 
-/* Combat Clash Scene 4 */
+/* Scene 4 Clash Animation */
 .combat-clash-container {
   display: flex;
   align-items: center;
@@ -485,11 +502,22 @@ html, body {
   opacity: 0.85;
 }
 
-/* Helper Utility Classes */
+/* Camera Shake Effect Class */
+.camera-shake {
+  animation: shakeViewport 300ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shakeViewport {
+  10%, 90% { transform: translate3d(-2px, 0, 0); }
+  20%, 80% { transform: translate3d(4px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-8px, 0, 0); }
+  40%, 60% { transform: translate3d(8px, 0, 0); }
+}
+
+/* Helper Utilities */
 .hidden { display: none !important; }
 .hidden-scene { display: none !important; opacity: 0; }
 
-/* Responsive Adjustments */
 @media (max-width: 600px) {
   .game-hud-header { padding: 0.8rem; }
   .hud-title { font-size: 0.95rem; }

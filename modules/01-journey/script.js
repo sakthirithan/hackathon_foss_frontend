@@ -1,10 +1,10 @@
 /* ==========================================================================
-   MODULE 01 — JOURNEY LOGIC & ENGINE
+   MODULE 01 — JOURNEY LOGIC & CINEMATIC ENGINE
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // 1. Shared State Contract
+  // 1. Shared Game State Contract
   const kuralQuest = {
     get state() {
       try {
@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentScene: 1,
       score: 0,
       soundEnabled: true,
+      battleStarted: false,
       battleCompleted: false,
       wisdomCompleted: false
     },
@@ -36,11 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const scoreDisplay = document.getElementById('score-display');
   if (scoreDisplay) scoreDisplay.textContent = currentState.score;
 
-  // 2. Audio Engine with Web Audio Synthesizer Fallback
-  class SoundEngine {
-    constructor() {
-      this.ctx = null;
-    }
+  // 2. Audio Manager with Web Audio Synthesizer Fallback
+  class SoundManager {
+    constructor() { this.ctx = null; }
 
     initWebAudio() {
       if (!this.ctx) {
@@ -52,15 +51,17 @@ document.addEventListener('DOMContentLoaded', () => {
     playSound(type) {
       if (!kuralQuest.state.soundEnabled) return;
 
-      // HTML Audio Attempt
-      let audioFile = type === 'clash' ? 'sword-hit.wav' : (type === 'victory' ? 'victory.wav' : 'click.wav');
+      let fileMap = {
+        clash: 'sword-hit.wav',
+        victory: 'victory.wav',
+        click: 'click.wav'
+      };
+
+      let audioFile = fileMap[type] || 'click.wav';
       let audio = new Audio(`../../assets/audio/ui/${audioFile}`);
       audio.volume = 0.5;
 
-      audio.play().catch(() => {
-        // Fallback to Web Audio Synthesizer
-        this.synthSound(type);
-      });
+      audio.play().catch(() => this.synthSound(type));
     }
 
     synthSound(type) {
@@ -80,35 +81,61 @@ document.addEventListener('DOMContentLoaded', () => {
           osc.frequency.exponentialRampToValueAtTime(80, now + 0.15);
           gain.gain.setValueAtTime(0.6, now);
           gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
-          osc.start(now);
-          osc.stop(now + 0.15);
+          osc.start(now); osc.stop(now + 0.15);
         } else {
           osc.type = 'sine';
           osc.frequency.setValueAtTime(440, now);
           gain.gain.setValueAtTime(0.3, now);
           gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-          osc.start(now);
-          osc.stop(now + 0.1);
+          osc.start(now); osc.stop(now + 0.1);
         }
       } catch (e) {}
     }
   }
 
-  const soundEngine = new SoundEngine();
+  const soundManager = new SoundManager();
 
-  // Sound Toggle Button
+  // Sound Toggle Handler
   const soundBtn = document.getElementById('sound-btn');
   const soundIcon = document.getElementById('sound-icon');
   if (soundBtn) {
     soundBtn.addEventListener('click', () => {
       const active = !kuralQuest.state.soundEnabled;
       kuralQuest.saveState({ soundEnabled: active });
-      soundIcon.textContent = active ? '🔊' : '🔇';
-      if (active) soundEngine.playSound('click');
+      if (soundIcon) soundIcon.textContent = active ? '🔊' : '🔇';
+      if (active) soundManager.playSound('click');
     });
   }
 
-  // 3. Scene Controller System
+  // 3. Camera Controller
+  const CameraController = {
+    shake() {
+      const stage = document.getElementById('viewport-stage');
+      if (stage) {
+        stage.classList.add('camera-shake');
+        setTimeout(() => stage.classList.remove('camera-shake'), 350);
+      }
+    }
+  };
+
+  // 4. Reusable Character Controller
+  const CharacterController = {
+    setCharacterPose(heroImgId, pose) {
+      const img = document.getElementById(heroImgId);
+      if (!img) return;
+
+      const poseMap = {
+        idle: '../../assets/images/characters/warrior_front.png',
+        walk: '../../assets/images/characters/warrior_side.png',
+        ready: '../../assets/images/characters/warrior_battle.png',
+        attack: '../../assets/images/characters/warrior_battle.png'
+      };
+
+      if (poseMap[pose]) img.src = poseMap[pose];
+    }
+  };
+
+  // 5. Scene Manager
   const SceneManager = {
     scenes: ['scene-01', 'scene-02', 'scene-03', 'scene-04'],
     currentSceneId: 'scene-01',
@@ -144,37 +171,47 @@ document.addEventListener('DOMContentLoaded', () => {
           if (txt2) txt2.classList.remove('hidden');
         }, 1200);
       } else if (sceneId === 'scene-04') {
-        this.runScene4Combat();
+        this.runScene4CombatSequence();
       }
     },
 
-    runScene4Combat() {
+    runScene4CombatSequence() {
       const warrior = document.getElementById('scene4-hero');
       const enemy = document.getElementById('scene4-enemy');
       const spark = document.getElementById('clash-spark');
       const flash = document.getElementById('impact-flash');
+      const statusTitle = document.getElementById('scene4-status-title');
+      const statusSub = document.getElementById('scene4-status-sub');
 
       setTimeout(() => {
         if (warrior) warrior.style.transform = 'translateX(60px)';
         if (enemy) enemy.style.transform = 'translateX(-60px)';
-        soundEngine.playSound('clash');
+        soundManager.playSound('clash');
 
         setTimeout(() => {
           if (spark) spark.classList.add('active');
+          CameraController.shake();
           if (flash) {
             flash.classList.add('flash');
             setTimeout(() => flash.classList.remove('flash'), 150);
           }
+
+          setTimeout(() => {
+            if (warrior) warrior.style.transform = 'translateX(10px)';
+            if (enemy) enemy.style.transform = 'translateX(-10px)';
+            if (statusTitle) statusTitle.textContent = 'போர் இப்போதுதான் தொடங்குகிறது.';
+            if (statusSub) statusSub.textContent = 'தயாரா?';
+          }, 400);
         }, 300);
       }, 500);
     }
   };
 
-  // 4. Button Interactions for Module 01
+  // 6. Scene Interactions
   const btnStart = document.getElementById('btn-scene1-start');
   if (btnStart) {
     btnStart.addEventListener('click', () => {
-      soundEngine.playSound('click');
+      soundManager.playSound('click');
       SceneManager.goTo('scene-02');
     });
   }
@@ -182,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnAdvance = document.getElementById('btn-scene2-advance');
   if (btnAdvance) {
     btnAdvance.addEventListener('click', () => {
-      soundEngine.playSound('click');
+      soundManager.playSound('click');
       SceneManager.goTo('scene-03');
     });
   }
@@ -190,38 +227,67 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnFight = document.getElementById('btn-scene3-fight');
   if (btnFight) {
     btnFight.addEventListener('click', () => {
-      soundEngine.playSound('clash');
+      soundManager.playSound('clash');
       SceneManager.goTo('scene-04');
     });
   }
 
   const btnRetreat = document.getElementById('btn-scene3-retreat');
-  const subText3 = document.getElementById('scene3-sub-text');
+  const btnRetry = document.getElementById('btn-scene3-retry');
+  const scene3Heading = document.getElementById('scene3-heading');
+  const scene3SubText = document.getElementById('scene3-sub-text');
+  const scene3Actions = document.getElementById('scene3-actions');
+  const scene3RetryActions = document.getElementById('scene3-retry-actions');
+  const heroBox3 = document.getElementById('scene3-warrior-box');
+  const scene3Bg = document.getElementById('scene3-bg');
+
   if (btnRetreat) {
     btnRetreat.addEventListener('click', () => {
-      soundEngine.playSound('click');
-      const heroBox = document.getElementById('scene3-warrior-box');
-      if (heroBox) heroBox.style.transform = 'translateX(-40px)';
-      if (subText3) {
-        subText3.textContent = '⚠️ பயம் வெற்றியைத் தராது. மீண்டும் முன்னேறு!';
-        subText3.style.color = '#B84320';
+      soundManager.playSound('click');
+      if (heroBox3) heroBox3.style.transform = 'translateX(-60px)';
+      if (scene3Bg) scene3Bg.style.filter = 'brightness(0.2) contrast(1.2)';
+
+      if (scene3Heading) scene3Heading.textContent = 'பயம் வெற்றியைத் தராது.';
+      if (scene3SubText) {
+        scene3SubText.textContent = 'மீண்டும் முயற்சி செய்.';
+        scene3SubText.style.color = '#F1D7A0';
       }
-      setTimeout(() => {
-        if (heroBox) heroBox.style.transform = 'none';
-      }, 600);
+
+      if (scene3Actions) scene3Actions.classList.add('hidden');
+      if (scene3RetryActions) scene3RetryActions.classList.remove('hidden');
+    });
+  }
+
+  if (btnRetry) {
+    btnRetry.addEventListener('click', () => {
+      soundManager.playSound('clash');
+      if (heroBox3) heroBox3.style.transform = 'none';
+      if (scene3Bg) scene3Bg.style.filter = 'brightness(0.4) contrast(1.1)';
+
+      if (scene3Heading) scene3Heading.textContent = 'முதல் சவால்.';
+      if (scene3SubText) scene3SubText.textContent = 'முன்னால் எதிரி நிற்கிறான்.';
+
+      if (scene3RetryActions) scene3RetryActions.classList.add('hidden');
+      if (scene3Actions) scene3Actions.classList.remove('hidden');
+
+      SceneManager.goTo('scene-04');
     });
   }
 
   const btnEnterBattle = document.getElementById('btn-scene4-enter-battle');
   if (btnEnterBattle) {
     btnEnterBattle.addEventListener('click', () => {
-      soundEngine.playSound('clash');
-      kuralQuest.saveState({ currentModule: 'battle', currentStage: 2, currentScene: 5 });
+      soundManager.playSound('clash');
+      kuralQuest.saveState({
+        currentModule: 'battle',
+        currentScene: 5,
+        battleStarted: true
+      });
       window.location.href = '../02-battle/index.html';
     });
   }
 
-  // 5. Fire Ember Particle Engine
+  // 7. Fire Ember Particle Engine
   const canvas = document.getElementById('particle-canvas');
   if (canvas) {
     const ctx = canvas.getContext('2d');
@@ -261,7 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    const particles = Array.from({ length: 30 }, () => new EmberParticle());
+    const particles = Array.from({ length: 35 }, () => new EmberParticle());
     function renderParticles() {
       ctx.clearRect(0, 0, width, height);
       particles.forEach(p => { p.update(); p.draw(); });
