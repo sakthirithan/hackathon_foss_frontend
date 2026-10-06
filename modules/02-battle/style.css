@@ -73,11 +73,17 @@ body { width: 100%; min-height: 100vh; background: var(--bg-dark); color: var(--
 .impact-flash { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: white; opacity: 0; pointer-events: none; transition: opacity 0.1s ease; }
 .impact-flash.active { opacity: 0.85; }
 
-.battle-unit { font-size: 2.5rem; font-weight: 900; color: var(--gold-bright); transition: all 0.4s ease; }
-.battle-clash-symbol { font-size: 3.5rem; opacity: 0; transform: scale(0.2); transition: all 0.3s ease; }
+.battle-unit { display: flex; align-items: center; justify-content: center; height: 100%; transition: all 0.4s ease; }
+.unit-sprite-img { height: 160px; width: auto; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.85)); }
+.warrior-sprite { filter: drop-shadow(0 0 12px rgba(215, 122, 39, 0.4)); }
+.enemy-sprite { filter: drop-shadow(0 0 12px rgba(184, 67, 32, 0.5)); transform: scaleX(-1); }
+.weapon-clash-img { height: 90px; width: auto; object-fit: contain; filter: drop-shadow(0 0 20px var(--gold-bright)); }
+
+.battle-clash-symbol { font-size: 3.5rem; opacity: 0; transform: scale(0.2); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
 .battle-clash-symbol.active { opacity: 1; transform: scale(1.6); }
 
 .character-visual-container { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.warrior-render-img { width: 100%; max-width: 250px; height: auto; object-fit: contain; filter: drop-shadow(0 12px 24px rgba(0,0,0,0.9)); transition: transform 0.4s ease, filter 0.4s ease; }
 .pose-label-text { font-size: 1.5rem; font-weight: 900; color: var(--gold-bright); text-shadow: 0 0 12px var(--orange-ember); margin-top: 0.8rem; }
 .word-reveal-title { font-size: 3rem; font-weight: 900; color: var(--gold-bright); text-shadow: 0 0 25px rgba(241, 215, 160, 0.9); margin: 0.5rem 0; }
 

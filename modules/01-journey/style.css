@@ -61,6 +61,7 @@ body { width: 100%; min-height: 100vh; background: var(--bg-dark); color: var(--
 .battle-card-window { width: 100%; background: rgba(26, 21, 18, 0.85); border: 2px solid var(--brown-accent); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; flex-direction: column; align-items: center; }
 .character-visual-container { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .character-aura { position: absolute; width: 260px; height: 260px; background: radial-gradient(circle, rgba(215, 122, 39, 0.35) 0%, transparent 70%); border-radius: 50%; }
+.warrior-render-img { width: 100%; max-width: 280px; height: auto; object-fit: contain; filter: drop-shadow(0 12px 24px rgba(0,0,0,0.9)) drop-shadow(0 0 15px rgba(215, 122, 39, 0.4)); animation: warriorBreathing 4s ease-in-out infinite; }
 .warrior-svg { width: 100%; max-width: 250px; height: auto; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8)); animation: warriorBreathing 4s ease-in-out infinite; }
 
 @keyframes warriorBreathing { 0%, 100% { transform: translateY(0) scaleY(1); } 50% { transform: translateY(-7px) scaleY(1.02); } }

@@ -64,11 +64,9 @@ body { width: 100%; min-height: 100vh; background: var(--bg-dark); color: var(--
 .boss-badge, .victory-badge { background: var(--red-deep); color: var(--gold-bright); font-size: 0.95rem; font-weight: 800; padding: 0.3rem 1.2rem; border-radius: 15px; border: 1px solid var(--orange-ember); }
 .boss-timer-wrap { font-size: 1.3rem; font-weight: 900; color: #FF5252; }
 
-.boss-silhouette { width: 120px; height: 120px; background: #150a08; border-radius: 50%; position: relative; border: 3px solid var(--red-deep); display: flex; align-items: center; justify-content: center; }
-.boss-eye { width: 12px; height: 12px; background: #FF1744; border-radius: 50%; position: absolute; top: 40px; }
-.boss-eye.left { left: 35px; }
-.boss-eye.right { right: 35px; }
-.boss-name-tag { position: absolute; bottom: 12px; font-weight: 900; color: #FF5252; }
+.boss-silhouette { width: 140px; height: 140px; background: radial-gradient(circle, #250b07 0%, #0d0403 100%); border-radius: 50%; position: relative; border: 3px solid var(--red-deep); display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 0 20px rgba(184, 67, 32, 0.6); }
+.enemy-boss-img { width: 110%; height: 110%; object-fit: contain; filter: drop-shadow(0 0 10px rgba(255, 23, 68, 0.6)); }
+.boss-name-tag { position: absolute; bottom: 6px; font-weight: 900; color: #FF5252; background: rgba(0,0,0,0.8); padding: 0.1rem 0.5rem; border-radius: 6px; font-size: 0.8rem; z-index: 5; }
 
 .boss-question { font-size: 1.7rem; font-weight: 900; color: var(--gold-bright); text-align: center; margin: 1rem 0; }
 .boss-options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.8rem; width: 100%; }
