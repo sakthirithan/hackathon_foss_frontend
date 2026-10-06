@@ -107,6 +107,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Home Button Handler
+  const homeBtn = document.getElementById('home-btn');
+  if (homeBtn) {
+    homeBtn.addEventListener('click', () => {
+      soundManager.playSound('click');
+      kuralQuest.saveState({ currentModule: 'journey', currentScene: 1, score: 0 });
+      window.location.href = '../../index.html?reset=true';
+    });
+  }
+
   // 3. Camera Controller
   const CameraController = {
     shake() {

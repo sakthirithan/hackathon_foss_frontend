@@ -25,6 +25,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentState = kuralQuest.state;
   document.getElementById('score-display').textContent = currentState.score;
 
+  // Home Button Handler
+  const homeBtn = document.getElementById('home-btn');
+  if (homeBtn) {
+    homeBtn.addEventListener('click', () => {
+      playSound('click');
+      kuralQuest.saveState({ currentModule: 'journey', currentStage: 1, score: 0 });
+      window.location.href = '../../index.html?reset=true';
+    });
+  }
+
   // Sound Engine with Web Audio Synthesizer Fallback
   let audioCtx = null;
   function playSound(type) {
