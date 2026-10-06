@@ -1,5 +1,5 @@
 /* ==========================================================================
-   THIRUKKURAL WARRIOR QUEST — SCROLLABLE CINEMATIC GAME ENGINE (VANILLA JS)
+   THIRUKKURAL WARRIOR BATTLE EXPERIENCE — CINEMATIC GAME ENGINE (VANILLA JS)
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,7 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
     bossTimer: null,
     bossTimeLeft: 10,
     bossHits: 0,
-    totalBossTarget: 4
+    totalBossTarget: 4,
+    warriorHp: 100,
+    enemyHp: 100
   };
 
   const STORAGE_KEY_SCORE = 'ta_kural_warrior_score';
@@ -151,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================================================
-  // SCORE & PROGRESS MANAGEMENT WITH FLOATING SCORE (MINIMAL HUD)
+  // SCORE & PROGRESS MANAGEMENT WITH FLOATING SCORE
   // ==========================================================================
   const scoreDisplay = document.getElementById('score-display');
   const progressBar = document.getElementById('progress-bar');
@@ -162,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
     gameState.score = Math.max(0, gameState.score + amount);
     scoreDisplay.textContent = gameState.score;
 
-    // Show minimal floating score text briefly (+100)
     if (amount !== 0) {
       const floatEl = document.createElement('div');
       floatEl.className = 'floating-score-item';
@@ -193,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // NATURAL SCROLLING & INTERSECTION OBSERVER
+  // SCROLL & INTERSECTION OBSERVER
   // ==========================================================================
   function scrollToScene(stageNum) {
     const target = document.getElementById(`stage-${stageNum}`);
@@ -257,18 +258,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // SCENE NAVIGATION & BATTLE LOGIC
+  // SCENE NAVIGATION & BATTLE HANDLERS WITH HEALTH BARS
   // ==========================================================================
   document.getElementById('start-journey-btn').addEventListener('click', () => {
     playSound('clash');
     scrollToScene(2);
   });
 
-  // Scene 2 Battle Actions
+  // Scene 2 Battle Actions with Health Bar updates
   const animWarrior = document.getElementById('anim-warrior');
   const animEnemy = document.getElementById('anim-enemy');
   const animClash = document.getElementById('anim-clash');
   const gotoChap3Btn = document.getElementById('goto-chap3-btn');
+  const enemyHpBar = document.getElementById('enemy-hp-bar');
 
   document.getElementById('cmd-attack').addEventListener('click', () => {
     playSound('clash');
@@ -279,9 +281,15 @@ document.addEventListener('DOMContentLoaded', () => {
     animEnemy.style.transform = 'translateX(-60px)';
     animClash.classList.add('active');
 
+    // Reduce enemy health
+    gameState.enemyHp = Math.max(0, gameState.enemyHp - 50);
+    if (enemyHpBar) enemyHpBar.style.width = `${gameState.enemyHp}%`;
+
     setTimeout(() => {
-      animEnemy.style.opacity = '0.3';
-      animEnemy.style.transform = 'translateX(-100px) rotate(-15deg)';
+      if (gameState.enemyHp <= 0) {
+        animEnemy.style.opacity = '0.2';
+        animEnemy.style.transform = 'translateX(-100px) rotate(-15deg)';
+      }
       playSound('correct');
       updateScore(50);
       gotoChap3Btn.classList.remove('hidden');
@@ -300,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
     scrollToScene(3);
   });
 
-  // Scene 3 -> 4 (Wounded -> Rising Up)
+  // Scene 3 -> 4
   document.getElementById('goto-chap4-btn').addEventListener('click', () => {
     playSound('clash');
     triggerScreenShake();
@@ -338,7 +346,6 @@ document.addEventListener('DOMContentLoaded', () => {
     scrollToScene(9);
   });
 
-  // Idea cards click
   ['idea-1', 'idea-2', 'idea-3', 'idea-4'].forEach(id => {
     const el = document.getElementById(id);
     if (el) {

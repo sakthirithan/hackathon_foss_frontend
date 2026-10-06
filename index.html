@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>குறள் வீரப் பயணம் — Thirukkural Cinematic Story Quest</title>
+  <title>குறள் வீரப் பயணம் — Thirukkural Cinematic Battle Adventure</title>
 
   <!-- Google Fonts for Tamil Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,7 @@
   <!-- Vignette & Dynamic Light Overlay -->
   <div class="light-overlay" id="light-overlay"></div>
 
-  <!-- Main Scrollable App Wrapper -->
+  <!-- Main App Wrapper -->
   <div id="app-wrapper">
 
     <!-- Minimal Game HUD Header Bar -->
@@ -49,13 +49,13 @@
       </div>
     </header>
 
-    <!-- Floating Score Animation Container -->
+    <!-- Floating Score Indicator -->
     <div id="floating-score-container"></div>
 
-    <!-- MAIN SCROLLABLE STORY CONTAINER -->
+    <!-- MAIN SCROLLABLE BATTLE CONTAINER -->
     <main class="story-scroll-container">
 
-      <!-- SCENE 1: வீரன் பிறந்தான் (WARRIOR AWAKENS) -->
+      <!-- SCENE 1: வீரனின் பயணம் (WARRIOR JOURNEY AWAKENING) -->
       <section class="story-scene-section" id="stage-1" data-bg="temple">
         <div class="scene-environment-layer">
           <div class="bg-env-image"></div>
@@ -68,35 +68,37 @@
             <p class="kural-line">வழிவந்த வன்க ணதுவே படை.</p>
           </div>
 
-          <!-- Character Visual -->
-          <div class="character-visual-container warrior-idle-pose">
-            <div class="character-aura"></div>
-            <svg viewBox="0 0 300 380" class="warrior-svg">
-              <defs>
-                <radialGradient id="gradEmber" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#D77A27" stop-opacity="0.8" />
-                  <stop offset="100%" stop-color="#8B2E1E" stop-opacity="0" />
-                </radialGradient>
-                <linearGradient id="gradAxe" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#F1D7A0" />
-                  <stop offset="50%" stop-color="#D6B36A" />
-                  <stop offset="100%" stop-color="#8B2E1E" />
-                </linearGradient>
-              </defs>
-              <circle cx="150" cy="190" r="140" fill="url(#gradEmber)" />
-              <path d="M 60 140 Q 60 250 115 310 Q 115 250 115 140 Z" fill="#1A1512" stroke="#D6B36A" stroke-width="4" />
-              <circle cx="88" cy="200" r="12" fill="#D77A27" />
-              <path d="M 120 110 Q 80 200 70 330 L 230 330 Q 220 200 180 110 Z" fill="#8B2E1E" />
-              <path d="M 110 110 L 190 110 L 205 250 L 95 250 Z" fill="#30251D" stroke="#5A3A25" stroke-width="3" />
-              <ellipse cx="150" cy="75" rx="28" ry="34" fill="#30251D" stroke="#5A3A25" stroke-width="2" />
-              <path d="M 135 70 L 165 70 L 150 82 Z" fill="#B84320" />
-              <circle cx="140" cy="72" r="3" fill="#F1D7A0" />
-              <circle cx="160" cy="72" r="3" fill="#F1D7A0" />
-              <g class="weapon-arm-group">
-                <path d="M 205 50 L 220 320" stroke="#5A3A25" stroke-width="8" stroke-linecap="round" />
-                <path d="M 205 20 L 240 60 L 180 60 Z" fill="url(#gradAxe)" stroke="#F1D7A0" stroke-width="2" />
-              </g>
-            </svg>
+          <!-- Realistic Warrior Character Presentation -->
+          <div class="battle-card-window">
+            <div class="character-visual-container warrior-idle-pose">
+              <div class="character-aura"></div>
+              <svg viewBox="0 0 300 380" class="warrior-svg">
+                <defs>
+                  <radialGradient id="gradEmber" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#D77A27" stop-opacity="0.8" />
+                    <stop offset="100%" stop-color="#8B2E1E" stop-opacity="0" />
+                  </radialGradient>
+                  <linearGradient id="gradAxe" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#F1D7A0" />
+                    <stop offset="50%" stop-color="#D6B36A" />
+                    <stop offset="100%" stop-color="#8B2E1E" />
+                  </linearGradient>
+                </defs>
+                <circle cx="150" cy="190" r="140" fill="url(#gradEmber)" />
+                <path d="M 60 140 Q 60 250 115 310 Q 115 250 115 140 Z" fill="#1A1512" stroke="#D6B36A" stroke-width="4" />
+                <circle cx="88" cy="200" r="12" fill="#D77A27" />
+                <path d="M 120 110 Q 80 200 70 330 L 230 330 Q 220 200 180 110 Z" fill="#8B2E1E" />
+                <path d="M 110 110 L 190 110 L 205 250 L 95 250 Z" fill="#30251D" stroke="#5A3A25" stroke-width="3" />
+                <ellipse cx="150" cy="75" rx="28" ry="34" fill="#30251D" stroke="#5A3A25" stroke-width="2" />
+                <path d="M 135 70 L 165 70 L 150 82 Z" fill="#B84320" />
+                <circle cx="140" cy="72" r="3" fill="#F1D7A0" />
+                <circle cx="160" cy="72" r="3" fill="#F1D7A0" />
+                <g class="weapon-arm-group">
+                  <path d="M 205 50 L 220 320" stroke="#5A3A25" stroke-width="8" stroke-linecap="round" />
+                  <path d="M 205 20 L 240 60 L 180 60 Z" fill="url(#gradAxe)" stroke="#F1D7A0" stroke-width="2" />
+                </g>
+              </svg>
+            </div>
           </div>
 
           <!-- Movie Subtitle Narration -->
@@ -112,7 +114,7 @@
         </div>
       </section>
 
-      <!-- SCENE 2: போர்க்களம் (BATTLEFIELD AMBUSH) -->
+      <!-- SCENE 2: முதல் போர் (TYPE 1 BATTLE — DUEL) -->
       <section class="story-scene-section" id="stage-2" data-bg="battlefield">
         <div class="scene-environment-layer">
           <div class="bg-env-image"></div>
@@ -120,12 +122,25 @@
         </div>
 
         <div class="scene-content-overlay">
-          <!-- 2.5D Battle Arena Display -->
-          <div class="battle-arena-box" id="battle-arena-3d">
-            <div class="impact-flash" id="impact-flash"></div>
-            <div class="battle-unit warrior-unit" id="anim-warrior">🛡️ வீரன்</div>
-            <div class="battle-clash-symbol" id="anim-clash">💥</div>
-            <div class="battle-unit enemy-unit" id="anim-enemy">⚔️ எதிரி</div>
+          <!-- Battle Window with Health Bars -->
+          <div class="battle-card-window">
+            <div class="battle-health-hud">
+              <div class="health-unit">
+                <span class="unit-name">🛡️ வீரன்</span>
+                <div class="hp-bar-track"><div class="hp-bar-fill warrior-hp" id="warrior-hp-bar"></div></div>
+              </div>
+              <div class="health-unit">
+                <span class="unit-name">⚔️ எதிரி</span>
+                <div class="hp-bar-track"><div class="hp-bar-fill enemy-hp" id="enemy-hp-bar"></div></div>
+              </div>
+            </div>
+
+            <div class="battle-arena-box" id="battle-arena-3d">
+              <div class="impact-flash" id="impact-flash"></div>
+              <div class="battle-unit warrior-unit" id="anim-warrior">🛡️ வீரன்</div>
+              <div class="battle-clash-symbol" id="anim-clash">💥</div>
+              <div class="battle-unit enemy-unit" id="anim-enemy">⚔️ எதிரி</div>
+            </div>
           </div>
 
           <!-- Movie Subtitle Narration -->
@@ -144,7 +159,7 @@
         </div>
       </section>
 
-      <!-- SCENE 3: தோல்வி & விழுதல் (WARRIOR FALLS) -->
+      <!-- SCENE 3: வீரன் வீழ்கிறான் (TYPE 3 SURVIVAL — WARRIOR FALLS) -->
       <section class="story-scene-section" id="stage-3" data-bg="battlefield">
         <div class="scene-environment-layer">
           <div class="bg-env-image"></div>
@@ -152,8 +167,10 @@
         </div>
 
         <div class="scene-content-overlay">
-          <div class="character-visual-container warrior-fallen-pose" id="warrior-fallen-box">
-            <div class="pose-label-text">💥 "அடிபட்ட வீரன் கீழே விழுகிறான்..."</div>
+          <div class="battle-card-window">
+            <div class="character-visual-container warrior-fallen-pose" id="warrior-fallen-box">
+              <div class="pose-label-text">💥 "அடிபட்ட வீரன் கீழே விழுந்தான்..."</div>
+            </div>
           </div>
 
           <!-- Movie Subtitle Narration -->
@@ -169,15 +186,17 @@
         </div>
       </section>
 
-      <!-- SCENE 4: எழுதல் (RISE UP — "அழிவின்றி") -->
+      <!-- SCENE 4: வீரன் எழுகிறான் ("அழிவின்றி") -->
       <section class="story-scene-section" id="stage-4" data-bg="battlefield">
         <div class="scene-environment-layer">
           <div class="bg-env-image"></div>
         </div>
 
         <div class="scene-content-overlay">
-          <div class="character-visual-container warrior-rising-pose" id="warrior-rising-box">
-            <div class="pose-label-text">💪 "விழுந்தாலும் மீண்டு எழுந்தான்!"</div>
+          <div class="battle-card-window">
+            <div class="character-visual-container warrior-rising-pose" id="warrior-rising-box">
+              <div class="pose-label-text">💪 "விழுந்தாலும் மீண்டு எழுந்தான்!"</div>
+            </div>
           </div>
 
           <div class="word-reveal-title">🛡️ அழிவின்றி</div>
@@ -195,15 +214,17 @@
         </div>
       </section>
 
-      <!-- SCENE 5: துணிவு (COURAGE — "அறைபோகா") -->
+      <!-- SCENE 5: பின்வாங்க மறுக்கிறான் ("அறைபோகா") -->
       <section class="story-scene-section" id="stage-5" data-bg="mountain">
         <div class="scene-environment-layer">
           <div class="bg-env-image"></div>
         </div>
 
         <div class="scene-content-overlay">
-          <div class="character-visual-container warrior-courage-pose">
-            <div class="pose-label-text">🦁 "பயந்து ஓடாமல் துணிவுடன் நிற்பது!"</div>
+          <div class="battle-card-window">
+            <div class="character-visual-container warrior-courage-pose">
+              <div class="pose-label-text">🦁 "பயந்து ஓடாமல் துணிவுடன் நிற்பது!"</div>
+            </div>
           </div>
 
           <div class="word-reveal-title">⚔️ அறைபோகா</div>
@@ -221,16 +242,18 @@
         </div>
       </section>
 
-      <!-- SCENE 6: வீரர்கள் இணைதல் (UNITY — "வழிவந்த") -->
+      <!-- SCENE 6: வீரர்கள் இணைகிறார்கள் ("வழிவந்த") -->
       <section class="story-scene-section" id="stage-6" data-bg="mountain">
         <div class="scene-environment-layer">
           <div class="bg-env-image"></div>
         </div>
 
         <div class="scene-content-overlay">
-          <div class="character-visual-container warrior-unity-pose">
-            <div class="squad-icons-row">👥 🛡️ ⚔️ 🛡️</div>
-            <div class="pose-label-text">🤝 "வீரர்கள் ஒன்று கூடுகிறார்கள்!"</div>
+          <div class="battle-card-window">
+            <div class="character-visual-container warrior-unity-pose">
+              <div class="squad-icons-row">👥 🛡️ ⚔️ 🛡️</div>
+              <div class="pose-label-text">🤝 "வீரர்கள் ஒன்று கூடுகிறார்கள்!"</div>
+            </div>
           </div>
 
           <div class="word-reveal-title">👥 வழிவந்த</div>
@@ -248,7 +271,7 @@
         </div>
       </section>
 
-      <!-- SCENE 7: உண்மையான படை (THE ARMY — "வன்கணதுவே படை.") -->
+      <!-- SCENE 7: படை உருவாகிறது ("வன்கணதுவே படை.") -->
       <section class="story-scene-section" id="stage-7" data-bg="temple">
         <div class="scene-environment-layer">
           <div class="bg-env-image"></div>
@@ -408,7 +431,7 @@
         </div>
       </section>
 
-      <!-- SCENE 11: FINAL BOSS BATTLE (10S TIMER) -->
+      <!-- SCENE 11: 3D BOSS BATTLE (TYPE 6 — SHADOW BOSS) -->
       <section class="story-scene-section" id="stage-11" data-bg="battlefield">
         <div class="scene-environment-layer">
           <div class="bg-env-image"></div>
