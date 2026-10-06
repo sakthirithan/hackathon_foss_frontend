@@ -1,33 +1,27 @@
-# 🗺️ Module Map & Functional Breakdown
+## 🎬 23-Scene Master Game Map
 
-## Module 01: Journey (`modules/01-journey/`)
-- **Index Entry**: `modules/01-journey/index.html`
-- **Responsibilities**:
-  - Landing Hero View (`வீரப் பயணத்தின் தொடக்கம்`)
-  - Cinematic Story Cutscene
-  - Carved Stone Kural Inscription Reveal
-  - Initial Environment Setting (`temple_bg.jpg`)
-  - Start Button `⚔️ வீரப் பயணத்தைத் தொடங்கு` (Saves state and routes to Module 02 Battle)
-
-## Module 02: Battle (`modules/02-battle/`)
-- **Index Entry**: `modules/02-battle/index.html`
-- **Responsibilities**:
-  - Battle Card Engine & Integrated HP HUD (`🛡️ வீரன்` HP vs `⚔️ எதிரி` HP)
-  - Interactive Combat Actions (`⚔️ தாக்கு!`, `🛡️ காப்பாற்று!`)
-  - Warrior Defeat & Falling (`💥 வீரன் வீழ்கிறான்`)
-  - Rising Animation (`🔥 அழிவின்றி — விழுந்தாலும் எழு!`)
-  - Courage Stance (`⚔️ அறைபோகா — பயந்து ஓடாதே!`)
-  - Squad Joining & Army Formation (`👥 வழிவந்த`, `🛡️ வன்கணதுவே படை`)
-  - Advances to Module 03 Wisdom upon army assembly!
-
-## Module 03: Wisdom (`modules/03-wisdom/`)
-- **Index Entry**: `modules/03-wisdom/index.html`
-- **Responsibilities**:
-  - 4 Core Warrior Rules (`💪 தளராதே`, `🦁 துணிவாக இரு`, `🤝 ஒன்றாக இரு`, `🛡️ கடமையை செய்`)
-  - Quiz Challenge 1 (*"ஒரு நல்ல படை எப்படி இருக்கும்?"*)
-  - Team Builder Challenge 2 (Quality Selection)
-  - Real Life Scenario Challenge 3
-  - Final Boss Trial Arena (10-second Countdown Timer)
-  - Victory Sunrise Visual Transformation (`sunrise_bg.jpg`)
-  - Rank Calculation (`ஞான வீரன்`)
-  - Score Summary & Replay Handler
+| Scene | Module | Purpose | File Specification |
+|---|---|---|---|
+| 01 | Journey | World Awakening | `modules/01-journey/work_01_journey.md` |
+| 02 | Journey | Warrior Alone | `modules/01-journey/work_01_journey.md` |
+| 03 | Journey | First Challenge | `modules/01-journey/work_01_journey.md` |
+| 04 | Journey ➔ Battle | Combat Intro | `modules/01-journey/work_01_journey.md` |
+| 05 | Battle | First Fight | `modules/02-battle/work_02_battle.md` |
+| 06 | Battle | Fall | `modules/02-battle/work_02_battle.md` |
+| 07 | Battle | Rise / அழிவின்றி | `modules/02-battle/work_02_battle.md` |
+| 08 | Battle | Courage / அறைபோகா | `modules/02-battle/work_02_battle.md` |
+| 09 | Battle | Overwhelmed | `modules/02-battle/work_02_battle.md` |
+| 10 | Battle | Ally Arrives | `modules/02-battle/work_02_battle.md` |
+| 11 | Battle | Line / வழிவந்த | `modules/02-battle/work_02_battle.md` |
+| 12 | Battle | Team Combat | `modules/02-battle/work_02_battle.md` |
+| 13 | Battle | Army / படை | `modules/02-battle/work_02_battle.md` |
+| 14 | Battle | Large War | `modules/02-battle/work_02_battle.md` |
+| 15 | Battle | Boss Introduction | `modules/02-battle/work_02_battle.md` |
+| 16 | Battle | Boss Fight | `modules/02-battle/work_02_battle.md` |
+| 17 | Wisdom | Peace | `modules/03-wisdom/work_03_wisdom.md` |
+| 18 | Wisdom | Kural Explanation | `modules/03-wisdom/work_03_wisdom.md` |
+| 19 | Wisdom | Full Kural | `modules/03-wisdom/work_03_wisdom.md` |
+| 20 | Wisdom | Real Life Application | `modules/03-wisdom/work_03_wisdom.md` |
+| 21 | Wisdom | Final Challenge | `modules/03-wisdom/work_03_wisdom.md` |
+| 22 | Wisdom | Victory | `modules/03-wisdom/work_03_wisdom.md` |
+| 23 | Wisdom | Final Kural & Replay | `modules/03-wisdom/work_03_wisdom.md` |
