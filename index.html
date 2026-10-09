@@ -4,44 +4,185 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>குறள் வீரப் பயணம் — Router</title>
+  <title>குறள் வீரப் பயணம் — Thirukkural Cinematic Quest</title>
+  <meta name="description" content="திருக்குறள் நெறியை அடிப்படையாகக் கொண்ட காவியப் போர்க்கள அனுபவம். interactive Thirukkural gamified web experience.">
+  <meta name="theme-color" content="#080808">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;700;800;900&family=Mukta+Malar:wght@400;600;700;800&display=swap" rel="stylesheet">
+
   <style>
+    :root {
+      --bg-dark: #080808;
+      --gold-bright: #F1D7A0;
+      --gold-accent: #D6B36A;
+      --orange-ember: #D77A27;
+      --red-bright: #B84320;
+      --stone-border: #30251D;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       margin: 0;
-      background: #080808;
-      color: #F1D7A0;
-      font-family: 'Catamaran', sans-serif;
+      background: radial-gradient(circle at center, #1a120c 0%, #080808 80%);
+      color: var(--gold-bright);
+      font-family: 'Catamaran', 'Mukta Malar', sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
+      min-height: 100svh;
+      padding: 1.5rem;
+      overflow-x: hidden;
     }
 
-    .loading-box {
+    .portal-card {
+      background: rgba(17, 17, 17, 0.92);
+      border: 2px solid var(--stone-border);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
       text-align: center;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(215, 122, 39, 0.2);
+      backdrop-filter: blur(12px);
+      animation: cardPulse 3s infinite alternate;
     }
 
-    .loading-spinner {
-      font-size: 3rem;
-      animation: spin 1s linear infinite;
+    @keyframes cardPulse {
+      0% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 20px rgba(215, 122, 39, 0.15); }
+      100% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(215, 122, 39, 0.4); }
     }
 
-    @keyframes spin {
-      100% {
-        transform: rotate(360deg);
+    .portal-icon {
+      font-size: 3.5rem;
+      margin-bottom: 0.8rem;
+      display: inline-block;
+      animation: iconSpin 4s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 15px var(--orange-ember));
+    }
+
+    @keyframes iconSpin {
+      0% { transform: scale(1) rotate(-5deg); }
+      100% { transform: scale(1.1) rotate(5deg); }
+    }
+
+    .portal-title {
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      font-weight: 900;
+      color: var(--gold-bright);
+      text-shadow: 0 0 15px var(--orange-ember);
+      margin-bottom: 0.5rem;
+    }
+
+    .portal-subtitle {
+      font-size: 1.05rem;
+      color: var(--gold-accent);
+      margin-bottom: 1.8rem;
+    }
+
+    .loading-bar-track {
+      width: 100%;
+      height: 8px;
+      background: rgba(48, 37, 29, 0.8);
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--stone-border);
+      margin-bottom: 1.8rem;
+    }
+
+    .loading-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--red-bright), var(--orange-ember), var(--gold-accent));
+      animation: fillBar 1.2s ease-in-out forwards;
+    }
+
+    @keyframes fillBar {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    .module-shortcuts {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      width: 100%;
+    }
+
+    .module-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, rgba(30, 22, 17, 0.9) 0%, rgba(17, 17, 17, 0.9) 100%);
+      border: 1px solid var(--stone-border);
+      border-radius: 12px;
+      padding: 0.9rem 1.4rem;
+      color: var(--gold-bright);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 1.1rem;
+      transition: all 220ms ease;
+    }
+
+    .module-btn:hover {
+      border-color: var(--gold-accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(215, 122, 39, 0.3);
+      background: linear-gradient(135deg, rgba(90, 58, 37, 0.9) 0%, rgba(30, 22, 17, 0.9) 100%);
+    }
+
+    .badge-icon {
+      font-size: 1.3rem;
+    }
+
+    @media (max-width: 480px) {
+      .portal-card {
+        padding: 1.8rem 1.2rem;
+      }
+      .module-btn {
+        padding: 0.8rem 1rem;
+        font-size: 1rem;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="loading-box">
-    <div class="loading-spinner">⚔️</div>
-    <h2>குறள் வீரப் பயணம் ஏற்றப்படுகிறது...</h2>
+  <div class="portal-card">
+    <div class="portal-icon">⚔️</div>
+    <h1 class="portal-title">குறள் வீரப் பயணம்</h1>
+    <p class="portal-subtitle">காவியத் திருக்குறள் போர்க்கள அனுபவம்</p>
+
+    <div class="loading-bar-track">
+      <div class="loading-bar-fill"></div>
+    </div>
+
+    <div class="module-shortcuts">
+      <a href="modules/01-journey/index.html" class="module-btn" id="link-journey">
+        <span>⚔️ அத்தியாயம் 01: பயணம்</span>
+        <span class="badge-icon">➔</span>
+      </a>
+      <a href="modules/02-battle/index.html" class="module-btn" id="link-battle">
+        <span>🛡️ அத்தியாயம் 02: போர்</span>
+        <span class="badge-icon">➔</span>
+      </a>
+      <a href="modules/03-wisdom/index.html" class="module-btn" id="link-wisdom">
+        <span>✨ அத்தியாயம் 03: ஞானம்</span>
+        <span class="badge-icon">➔</span>
+      </a>
+    </div>
   </div>
 
   <script>
-    // Shared State Router
+    // Shared State Router with instant smooth redirect
     const stateStr = localStorage.getItem('kuralQuest.state');
     let currentModule = 'journey';
     if (stateStr) {
@@ -53,14 +194,15 @@
       } catch (e) { }
     }
 
-    // Redirect to active module index.html
-    if (currentModule === 'battle') {
-      window.location.href = 'modules/02-battle/index.html';
-    } else if (currentModule === 'wisdom') {
-      window.location.href = 'modules/03-wisdom/index.html';
-    } else {
-      window.location.href = 'modules/01-journey/index.html';
-    }
+    setTimeout(() => {
+      if (currentModule === 'battle') {
+        window.location.href = 'modules/02-battle/index.html';
+      } else if (currentModule === 'wisdom') {
+        window.location.href = 'modules/03-wisdom/index.html';
+      } else {
+        window.location.href = 'modules/01-journey/index.html';
+      }
+    }, 800);
   </script>
 </body>
 

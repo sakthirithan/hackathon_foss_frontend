@@ -840,7 +840,23 @@ body {
   display: none !important;
 }
 
-/* Responsive Rules */
+/* Comprehensive Responsive Rules */
+@media (min-width: 1400px) {
+  .scene-content-overlay {
+    max-width: 1100px;
+  }
+  .battle-arena-box,
+  .boss-arena-box {
+    height: 280px;
+  }
+  .unit-sprite-img {
+    height: 210px;
+  }
+  .boss-sprite-img {
+    height: 240px;
+  }
+}
+
 @media (max-width: 768px) {
   .game-title-sm {
     font-size: 1.05rem;
@@ -881,33 +897,58 @@ body {
 }
 
 @media (max-width: 480px) {
+  .game-header {
+    padding: 0 0.75rem;
+  }
+
   .header-left .game-title-sm {
     display: none;
   }
 
+  .level-badge {
+    display: none;
+  }
+
+  .combo-badge-hud {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+  }
+
   .battle-arena-box,
   .boss-arena-box {
-    height: 190px;
+    height: 180px;
   }
 
   .unit-sprite-img {
-    height: 120px;
+    height: 110px;
   }
 
   .boss-sprite-img {
-    height: 135px;
+    height: 125px;
   }
 
   .word-reveal-title {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
   }
 
   .scene-action-bar {
     flex-direction: column;
     width: 100%;
+    gap: 0.6rem;
   }
 
   .game-btn {
     width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
   }
 }
+
+@media (max-width: 360px) {
+  .stage-progress-container {
+    width: 60px;
+  }
+  .score-card {
+    padding: 0.2rem 0.5rem;
+  }
+}

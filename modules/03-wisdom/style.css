@@ -1082,6 +1082,19 @@ body {
 }
 
 /* Media Queries */
+@media (min-width: 1400px) {
+  .kural-word {
+    font-size: 3.5rem;
+  }
+  .kural-meaning {
+    font-size: 2.2rem;
+  }
+  .final-card {
+    max-width: 950px;
+    padding: 3.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .kural-word {
     font-size: 2.2rem;
@@ -1130,6 +1143,55 @@ body {
   }
 }
 
+@media (max-width: 480px) {
+  .game-header {
+    padding: 0 0.75rem;
+  }
+
+  .game-title-sm {
+    display: none;
+  }
+
+  .level-badge {
+    display: none;
+  }
+
+  .kural-word {
+    font-size: 1.8rem;
+  }
+
+  .kural-meaning {
+    font-size: 1.2rem;
+  }
+
+  .kural-line {
+    font-size: 1.4rem;
+  }
+
+  .life-card {
+    width: 100%;
+    padding: 1.2rem;
+  }
+
+  .final-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .final-kural-block {
+    font-size: 1.3rem;
+  }
+
+  .final-meaning-block {
+    font-size: 1.1rem;
+  }
+
+  .game-btn {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
 
   *,
@@ -1140,4 +1202,4 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
+}

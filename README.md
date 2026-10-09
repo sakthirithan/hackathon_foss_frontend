@@ -262,6 +262,23 @@ Any modern web browser (Google Chrome, Mozilla Firefox, Microsoft Edge, Safari).
 
 ---
 
+## 🌐 Deploying to Netlify
+
+This project is pre-configured for instant deployment on **Netlify**:
+
+1. **Connect GitHub Repository**:
+   Log into [Netlify](https://www.netlify.com/), click **Add new site** → **Import an existing project**, and select `sakthirithan/hackathon_foss_frontend`.
+
+2. **Build Settings**:
+   - **Publish directory**: `.` (Root)
+   - **Build command**: Leave blank (Static site)
+
+3. **Deploy Configuration**:
+   The included `netlify.toml` and `_redirects` files automatically configure routing (`/journey`, `/battle`, `/wisdom`) and security headers.
+
+---
+
 ## 📄 License
 
 This project is open-source and available under the [MIT License](LICENSE).
+

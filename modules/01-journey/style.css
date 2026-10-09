@@ -613,40 +613,95 @@ body {
   opacity: 0;
 }
 
-@media (max-width: 600px) {
+/* Comprehensive Responsive Design System */
+@media (min-width: 1400px) {
+  .scene-cinematic-content {
+    max-width: 1100px;
+  }
+  .kural-main-heading {
+    font-size: 2rem;
+  }
+  .stage-hero-container {
+    width: 280px;
+    height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
   .game-hud-header {
-    padding: 0.8rem;
+    padding: 0.6rem 1rem;
+  }
+  .kural-header-badge {
+    padding: 0.9rem 1.2rem;
+  }
+  .kural-main-heading {
+    font-size: 1.35rem;
+  }
+  .stage-hero-container {
+    width: 180px;
+    height: 230px;
+  }
+  .cinematic-dialogue-card {
+    padding: 1rem 1.2rem;
+  }
+  .dialogue-line {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-hud-header {
+    padding: 0.5rem 0.75rem;
   }
 
   .hud-title {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
+  }
+
+  .chapter-badge {
+    display: none;
   }
 
   .progress-track {
-    width: 90px;
+    width: 75px;
   }
 
   .kural-main-heading {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
   }
 
   .combat-duo-container {
-    gap: 1rem;
+    gap: 0.5rem;
+    min-height: 180px;
   }
 
   .warrior-combat-box,
   .enemy-combat-box {
-    width: 130px;
-    height: 180px;
+    width: 110px;
+    height: 160px;
+  }
+
+  .vs-divider-icon {
+    font-size: 1.6rem;
   }
 
   .scene-interactive-actions {
     flex-direction: column;
     align-items: center;
+    gap: 0.8rem;
   }
 
   .action-game-btn {
     width: 100%;
-    max-width: 280px;
+    max-width: 100%;
+    min-width: auto;
+    font-size: 1.05rem;
+    padding: 0.75rem 1rem;
   }
 }
+
+@media (max-width: 360px) {
+  .hud-title {
+    display: none;
+  }
+}
